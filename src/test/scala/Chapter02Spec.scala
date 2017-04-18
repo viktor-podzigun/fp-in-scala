@@ -17,4 +17,23 @@ class Chapter02Spec extends FlatSpec with Matchers {
     fib(7) shouldBe 13
     fib(8) shouldBe 21
   }
+
+  "isSorted" should "check whether an `Array[A]` is sorted" in {
+    //given
+    val gtInt = (x1: Int, x2: Int) => x1 <= x2
+    val gtStr = (x1: String, x2: String) => x1 <= x2
+
+    //when & then
+    isSorted(Array(), gtInt) shouldBe true
+    isSorted(Array(1), gtInt) shouldBe true
+    isSorted(Array(1, 1), gtInt) shouldBe true
+    isSorted(Array(1, 2), gtInt) shouldBe true
+    isSorted(Array(1, 2, 2, 2, 3), gtInt) shouldBe true
+    isSorted(Array(1, 1, 0, 3), gtInt) shouldBe false
+    isSorted(Array(2, 1), gtInt) shouldBe false
+
+    isSorted(Array(), gtStr) shouldBe true
+    isSorted(Array("aa", "aa", "ab", "ac"), gtStr) shouldBe true
+    isSorted(Array("aa", "aa", "ac", "ab"), gtStr) shouldBe false
+  }
 }
