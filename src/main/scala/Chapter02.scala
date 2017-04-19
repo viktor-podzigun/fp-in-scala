@@ -36,4 +36,9 @@ object Chapter02 {
       f(a, b)
     }
   }
+
+  /**
+    * Exercise 4: Implement `uncurry`
+    */
+  def uncurry[A,B,C](f: A => B => C): (A, B) => C = (a: A, b: B) => f(a)(b)
 }

@@ -47,4 +47,15 @@ class Chapter02Spec extends FlatSpec with Matchers {
     //then
     result(2) shouldBe 7.0
   }
+
+  "uncurry" should "perform un-currying" in {
+    //given
+    val f = (a: Int) => (b: Long) => a.toDouble + b
+
+    //when
+    val result = uncurry(f)(5, 2)
+
+    //then
+    result shouldBe 7.0
+  }
 }
