@@ -25,4 +25,15 @@ object Chapter02 {
 
     loop(0)
   }
+
+  /**
+    * Exercise 3: Implement `curry`.
+    *
+    * Note that `=>` associates to the right, so we could write the return type as `A => B => C`
+    */
+  def curry[A,B,C](f: (A, B) => C): A => (B => C) = {
+    (a: A) => { b: B =>
+      f(a, b)
+    }
+  }
 }

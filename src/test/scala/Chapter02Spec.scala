@@ -36,4 +36,15 @@ class Chapter02Spec extends FlatSpec with Matchers {
     isSorted(Array("aa", "aa", "ab", "ac"), gtStr) shouldBe true
     isSorted(Array("aa", "aa", "ac", "ab"), gtStr) shouldBe false
   }
+
+  "curry" should "perform currying" in {
+    //given
+    val f = (a: Int, b: Long) => a.toDouble + b
+
+    //when
+    val result = curry(f)(5)
+
+    //then
+    result(2) shouldBe 7.0
+  }
 }
