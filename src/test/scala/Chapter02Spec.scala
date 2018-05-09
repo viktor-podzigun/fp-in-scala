@@ -58,4 +58,17 @@ class Chapter02Spec extends FlatSpec with Matchers {
     //then
     result shouldBe 7.0
   }
+
+  "compose" should "compose two functions" in {
+    //given
+    val f: Long => Double = (b: Long) => b.toDouble
+    val g: Int => Long = (a: Int) => a.toLong
+
+    //when
+    val result = compose(f, g)(7)
+
+    //then
+    result shouldBe 7.0
+    result shouldBe (f compose g)(7)
+  }
 }
