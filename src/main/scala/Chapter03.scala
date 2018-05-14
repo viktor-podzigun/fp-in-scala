@@ -1,6 +1,8 @@
 
-import fpinscala.datastructures._
 import fpinscala.datastructures.List._
+import fpinscala.datastructures._
+
+import scala.annotation.tailrec
 
 object Chapter03 {
 
@@ -42,5 +44,23 @@ object Chapter03 {
   def setHead[A](xs: List[A], x: A): List[A] = xs match {
     case Nil => Nil
     case Cons(_, t) => Cons(x, t)
+  }
+
+  /**
+    * Exercise 3.4
+    *
+    * Generalize `tail` to the function `drop`, which removes the first `n` elements from a list.
+    * Note that this function takes time proportional only to the number of elements being dropped —
+    * we don't need to make a copy of the entire `List`.
+    */
+  def drop[A](l: List[A], n: Int): List[A] = {
+    @tailrec
+    def loop(xs: List[A], n: Int): List[A] = xs match {
+      case _ if n <= 0 => xs
+      case Nil => xs
+      case Cons(_, t) => loop(t, n - 1)
+    }
+
+    loop(l, n)
   }
 }
