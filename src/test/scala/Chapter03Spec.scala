@@ -25,17 +25,13 @@ class Chapter03Spec extends FlatSpec with Matchers {
   }
 
   "drop" should "remove the first n elements from a List" in {
-    def assertSameList[A](xs: List[A], n: Int): Unit = {
-      drop(xs, n) should be theSameInstanceAs xs
-    }
-
     //when & then
-    assertSameList(List(), 0)
-    assertSameList(List(), 1)
-    assertSameList(List(), 2)
-    assertSameList(List(1), 0)
-    assertSameList(List(1, 2), 0)
-    assertSameList(List(1, 2, 3), 0)
+    assertSameList(List(), drop(_: List[_], 0))
+    assertSameList(List(), drop(_: List[_], 1))
+    assertSameList(List(), drop(_: List[_], 2))
+    assertSameList(List(1), drop(_: List[_], 0))
+    assertSameList(List(1, 2), drop(_: List[_], 0))
+    assertSameList(List(1, 2, 3), drop(_: List[_], 0))
 
     drop(List(1), 1) shouldBe Nil
     drop(List(1), 2) shouldBe Nil
@@ -50,5 +46,13 @@ class Chapter03Spec extends FlatSpec with Matchers {
     drop(List(1, 2, 3), 2) shouldBe List(3)
     drop(List(1, 2, 3, 4), 2) shouldBe List(3, 4)
     drop(List(1, 2, 3, 4), 3) shouldBe List(4)
+  }
+
+  "dropWhile" should "remove elements from the List prefix as long as they match a predicate" in {
+    //when & then
+  }
+
+  private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
+    f(xs) should be theSameInstanceAs xs
   }
 }

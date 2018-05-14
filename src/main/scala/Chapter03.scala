@@ -56,11 +56,25 @@ object Chapter03 {
   def drop[A](l: List[A], n: Int): List[A] = {
     @tailrec
     def loop(xs: List[A], n: Int): List[A] = xs match {
-      case _ if n <= 0 => xs
-      case Nil => xs
-      case Cons(_, t) => loop(t, n - 1)
+      case Cons(_, t) if n > 0 => loop(t, n - 1)
+      case _ => xs
     }
 
     loop(l, n)
+  }
+
+  /**
+    * Exercise 3.5
+    *
+    * Implement `dropWhile`, which removes elements from the `List` prefix as long as they match a predicate.
+    */
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = {
+    @tailrec
+    def loop(xs: List[A]): List[A] = xs match {
+      case Cons(h, t) if f(h) => loop(t)
+      case _ => xs
+    }
+
+    loop(l)
   }
 }
