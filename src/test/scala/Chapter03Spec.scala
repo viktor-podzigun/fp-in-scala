@@ -94,6 +94,15 @@ class Chapter03Spec extends FlatSpec with Matchers {
     foldRightWithNilAndCons shouldBe List(1, 2, 3)
   }
 
+  "length" should "return length of a List" in {
+    //when & then
+    Chapter03.length(List()) shouldBe 0
+    Chapter03.length(List(1)) shouldBe 1
+    Chapter03.length(List(1, 2)) shouldBe 2
+    Chapter03.length(List(1, 2, 3)) shouldBe 3
+    Chapter03.length(List(1, 2, 3, 4, 5)) shouldBe 5
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }

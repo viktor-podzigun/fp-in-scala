@@ -124,4 +124,13 @@ object Chapter03 {
     */
   def foldRightWithNilAndCons: List[Int] =
     foldRight(List(1, 2, 3), Nil: List[Int])(Cons(_, _))
+
+  /**
+    * Exercise 3.9
+    *
+    * Compute the length of a list using `foldRight`.
+    */
+  def length[A](as: List[A]): Int = foldRight(as, 0) { (_, res) =>
+    res + 1
+  }
 }
