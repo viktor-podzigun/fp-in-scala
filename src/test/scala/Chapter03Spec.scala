@@ -83,6 +83,12 @@ class Chapter03Spec extends FlatSpec with Matchers {
     init(List(1, 2, 3, 4)) shouldBe List(1, 2, 3)
   }
 
+  "product" should "immediately halt the recursion and return 0.0 if it encounters a 0.0" in {
+    //when & then
+    product(List(1, 2, 3)) shouldBe 6
+    product(List(1, 0, 3)) shouldBe 0
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }

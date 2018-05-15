@@ -95,4 +95,21 @@ object Chapter03 {
 
     loop(l)
   }
+
+  /**
+    * Exercise 3.7
+    *
+    * Can `product`, implemented using `foldRight`, immediately halt the recursion and return `0.0`
+    * if it encounters a `0.0`?
+    * Why or why not?
+    * Consider how any short-circuiting might work if you call `foldRight` with a large list.
+    */
+  def product(ns: List[Double]): Double = foldRight(ns, 1.0) { (x, y) =>
+    println(s"$x * $y")
+    if (x == 0.0) {
+      return 0.0
+    }
+
+    x * y
+  }
 }
