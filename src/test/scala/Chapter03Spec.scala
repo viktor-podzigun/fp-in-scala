@@ -89,6 +89,11 @@ class Chapter03Spec extends FlatSpec with Matchers {
     product(List(1, 0, 3)) shouldBe 0
   }
 
+  "foldRightWithNilAndCons" should "return new List with the same elements" in {
+    //when & then
+    foldRightWithNilAndCons shouldBe List(1, 2, 3)
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }
