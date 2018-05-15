@@ -50,6 +50,37 @@ class Chapter03Spec extends FlatSpec with Matchers {
 
   "dropWhile" should "remove elements from the List prefix as long as they match a predicate" in {
     //when & then
+    assertSameList(List(), dropWhile(_: List[Int], (_: Int) => true))
+    assertSameList(List(), dropWhile(_: List[Int], (_: Int) => false))
+    assertSameList(List(1), dropWhile(_: List[Int], (_: Int) => false))
+    assertSameList(List(1), dropWhile(_: List[Int], (_: Int) == 2))
+    assertSameList(List(1, 2), dropWhile(_: List[Int], (_: Int) == 2))
+    assertSameList(List(1, 2), dropWhile(_: List[Int], (_: Int) => false))
+    assertSameList(List(1, 2, 3), dropWhile(_: List[Int], (_: Int) => false))
+    assertSameList(List(1, 2, 3), dropWhile(_: List[Int], (_: Int) == 2))
+    assertSameList(List(1, 2, 3), dropWhile(_: List[Int], (_: Int) == 3))
+
+    dropWhile(List(1), (_: Int) => true) shouldBe Nil
+    dropWhile(List(1, 2), (_: Int) => true) shouldBe Nil
+    dropWhile(List(1, 2, 3), (_: Int) => true) shouldBe Nil
+
+    dropWhile(List(1), (_: Int) == 1) shouldBe Nil
+    dropWhile(List(1, 2), (_: Int) == 1) shouldBe List(2)
+    dropWhile(List(1, 1, 2), (_: Int) == 1) shouldBe List(2)
+    dropWhile(List(1, 1, 1, 2), (_: Int) == 1) shouldBe List(2)
+    dropWhile(List(1, 2, 3), (_: Int) == 1) shouldBe List(2, 3)
+    dropWhile(List(1, 1, 2, 3), (_: Int) == 1) shouldBe List(2, 3)
+    dropWhile(List(1, 2, 1, 3), (_: Int) == 1) shouldBe List(2, 1, 3)
+  }
+
+  "init" should "return a List consisting of all but the last element of a List" in {
+    //when & then
+    assertSameList(List(), init(_: List[Int]))
+
+    init(List(1)) shouldBe Nil
+    init(List(1, 2)) shouldBe List(1)
+    init(List(1, 2, 3)) shouldBe List(1, 2)
+    init(List(1, 2, 3, 4)) shouldBe List(1, 2, 3)
   }
 
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
