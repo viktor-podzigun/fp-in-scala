@@ -133,4 +133,22 @@ object Chapter03 {
   def length[A](as: List[A]): Int = foldRight(as, 0) { (_, res) =>
     res + 1
   }
+
+  /**
+    * Exercise 3.10
+    *
+    * Our implementation of `foldRight` is not tail-recursive and will result in a `StackOverflowError`
+    * for large lists (we say it's not stack-safe).
+    * Convince yourself that this is the case, and then write another general list-recursion function,
+    * `foldLeft`, that is tail-recursive, using the techniques we discussed in the previous chapter.
+    */
+  def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = {
+    @tailrec
+    def loop(xs: List[A], res: B): B = xs match {
+      case Nil => res
+      case Cons(h, t) => loop(t, f(res, h))
+    }
+
+    loop(as, z)
+  }
 }

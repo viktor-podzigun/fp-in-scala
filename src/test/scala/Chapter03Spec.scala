@@ -103,6 +103,12 @@ class Chapter03Spec extends FlatSpec with Matchers {
     Chapter03.length(List(1, 2, 3, 4, 5)) shouldBe 5
   }
 
+  "foldLeft" should "traverse elements from left to right" in {
+    //when & then
+    foldLeft(List(), "")(_ + _) shouldBe ""
+    foldLeft(List(1, 2, 3), "")(_ + _) shouldBe "123"
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }
