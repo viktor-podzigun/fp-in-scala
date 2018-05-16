@@ -109,6 +109,29 @@ class Chapter03Spec extends FlatSpec with Matchers {
     foldLeft(List(1, 2, 3), "")(_ + _) shouldBe "123"
   }
 
+  "sum3" should "return product of elements of a List using foldLeft" in {
+    //when & then
+    sum3(List()) shouldBe 0
+    sum3(List(1, 2, 3, 4)) shouldBe 10
+    sum3(List(1, 0, 3)) shouldBe 4
+  }
+
+  "product3" should "return product of elements of a List using foldLeft" in {
+    //when & then
+    product3(List()) shouldBe 1
+    product3(List(1, 2, 3, 4)) shouldBe 24
+    product3(List(1, 0, 3)) shouldBe 0
+  }
+
+  "length3" should "return length of a List using foldLeft" in {
+    //when & then
+    Chapter03.length3(List()) shouldBe 0
+    Chapter03.length3(List(1)) shouldBe 1
+    Chapter03.length3(List(1, 2)) shouldBe 2
+    Chapter03.length3(List(1, 2, 3)) shouldBe 3
+    Chapter03.length3(List(1, 2, 3, 4, 5)) shouldBe 5
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }

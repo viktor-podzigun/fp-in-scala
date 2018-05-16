@@ -151,4 +151,17 @@ object Chapter03 {
 
     loop(as, z)
   }
+
+  /**
+    * Exercise 3.11
+    *
+    * Write `sum`, `product`, and a function to compute the length of a list using `foldLeft`.
+    */
+  def sum3(ns: List[Int]): Int = foldLeft(ns, 0)((x, y) => x + y)
+
+  def product3(ns: List[Double]): Double = foldLeft(ns, 1.0)(_ * _)
+
+  def length3[A](as: List[A]): Int = foldLeft(as, 0) { (res, _) =>
+    res + 1
+  }
 }
