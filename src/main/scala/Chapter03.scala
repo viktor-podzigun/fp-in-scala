@@ -164,4 +164,16 @@ object Chapter03 {
   def length3[A](as: List[A]): Int = foldLeft(as, 0) { (res, _) =>
     res + 1
   }
+
+  /**
+    * Exercise 3.12
+    *
+    * Write a function that returns the reverse of a list (given `List(1,2,3)` it returns `List(3,2,1)`).
+    * See if you can write it using a fold.
+    */
+  def reverse[A](list: List[A]): List[A] = list match {
+    case Nil => list
+    case Cons(_, Nil) => list
+    case _ => foldLeft(list, Nil: List[A])((res, x) => Cons(x, res))
+  }
 }

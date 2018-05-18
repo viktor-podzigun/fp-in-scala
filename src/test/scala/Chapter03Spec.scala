@@ -132,6 +132,16 @@ class Chapter03Spec extends FlatSpec with Matchers {
     Chapter03.length3(List(1, 2, 3, 4, 5)) shouldBe 5
   }
 
+  "reverse" should "return length of a List using foldLeft" in {
+    //when & then
+    assertSameList(List(), reverse(_: List[Int]))
+    assertSameList(List(1), reverse(_: List[Int]))
+
+    reverse(List(1, 2)) shouldBe List(2, 1)
+    reverse(List(1, 2, 3)) shouldBe List(3, 2, 1)
+    reverse(List(1, 2, 3, 4)) shouldBe List(4, 3, 2, 1)
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }
