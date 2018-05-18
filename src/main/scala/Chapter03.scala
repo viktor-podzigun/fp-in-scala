@@ -176,4 +176,15 @@ object Chapter03 {
     case Cons(_, Nil) => list
     case _ => foldLeft(list, Nil: List[A])((res, x) => Cons(x, res))
   }
+
+  /**
+    * Exercise 3.13
+    *
+    * Hard: Can you write `foldLeft` in terms of foldRight? How about the other way around?
+    * Implementing `foldRight` via `foldLeft` is useful because it lets us implement `foldRight`
+    * tail-recursively, which means it works even for large lists without overflowing the stack.
+    */
+  def foldRight2[A, B](list: List[A], z: B)(f: (A, B) => B): B = {
+    foldLeft(reverse(list), z)((res, x) => f(x, res))
+  }
 }
