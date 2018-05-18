@@ -193,7 +193,19 @@ object Chapter03 {
     *
     * Implement `append` in terms of either `foldLeft` or `foldRight`.
     */
-  def append[A](list: List[A], x: A): List[A] = {
-    foldRight2(list, Cons(x, Nil))((x, res) => Cons(x, res))
+  def append[A](a1: List[A], a2: List[A]): List[A] = a2 match {
+    case Nil => a1
+    case _ => foldRight2(a1, a2)((x, res) => Cons(x, res))
+  }
+
+  /**
+    * Exercise 3.15
+    *
+    * Hard: Write a function that concatenates a list of lists into a single list.
+    * Its runtime should be linear in the total `length` of all lists.
+    * Try to use functions we have already defined.
+    */
+  def concatenate[A](lists: List[List[A]]): List[A] = {
+    foldRight2(lists, Nil: List[A])((x, res) => append(x, res))
   }
 }

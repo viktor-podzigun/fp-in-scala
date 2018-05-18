@@ -147,11 +147,29 @@ class Chapter03Spec extends FlatSpec with Matchers {
     foldRight2(List(1, 2, 3), Nil: List[Int])((x, res) => Cons(x, res)) shouldBe List(1, 2, 3)
   }
 
-  "append" should "traverse elements from right to left" in {
+  "append" should "add all the elements of one list to the end of another" in {
     //when & then
-    append(List(), 1) shouldBe List(1)
-    append(List(1), 2) shouldBe List(1, 2)
-    append(List(1, 2), 3) shouldBe List(1, 2, 3)
+    append(List(), List()) shouldBe List()
+    append(List(), List(1)) shouldBe List(1)
+    append(List(1), List()) shouldBe List(1)
+    append(List(1), List(2)) shouldBe List(1, 2)
+    append(List(1, 2), List(3)) shouldBe List(1, 2, 3)
+    append(List(1), List(2, 3)) shouldBe List(1, 2, 3)
+    append(List(1, 2), List(3, 4)) shouldBe List(1, 2, 3, 4)
+    append(List(1, 2, 3), List(4, 5, 6)) shouldBe List(1, 2, 3, 4, 5, 6)
+  }
+
+  "concatenate" should "concatenate a list of lists into a single list" in {
+    //when & then
+    concatenate(List(List())) shouldBe List()
+    concatenate(List(List(), List())) shouldBe List()
+    concatenate(List(List(1), List())) shouldBe List(1)
+    concatenate(List(List(), List(1))) shouldBe List(1)
+    concatenate(List(List(1), List(2))) shouldBe List(1, 2)
+    concatenate(List(List(1, 2), List(3))) shouldBe List(1, 2, 3)
+    concatenate(List(List(1), List(2, 3))) shouldBe List(1, 2, 3)
+    concatenate(List(List(1, 2), List(3, 4))) shouldBe List(1, 2, 3, 4)
+    concatenate(List(List(1, 2, 3), List(4), List(5, 6))) shouldBe List(1, 2, 3, 4, 5, 6)
   }
 
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
