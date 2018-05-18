@@ -147,6 +147,13 @@ class Chapter03Spec extends FlatSpec with Matchers {
     foldRight2(List(1, 2, 3), Nil: List[Int])((x, res) => Cons(x, res)) shouldBe List(1, 2, 3)
   }
 
+  "append" should "traverse elements from right to left" in {
+    //when & then
+    append(List(), 1) shouldBe List(1)
+    append(List(1), 2) shouldBe List(1, 2)
+    append(List(1, 2), 3) shouldBe List(1, 2, 3)
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }

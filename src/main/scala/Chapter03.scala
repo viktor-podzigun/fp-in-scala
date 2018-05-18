@@ -187,4 +187,13 @@ object Chapter03 {
   def foldRight2[A, B](list: List[A], z: B)(f: (A, B) => B): B = {
     foldLeft(reverse(list), z)((res, x) => f(x, res))
   }
+
+  /**
+    * Exercise 3.14
+    *
+    * Implement `append` in terms of either `foldLeft` or `foldRight`.
+    */
+  def append[A](list: List[A], x: A): List[A] = {
+    foldRight2(list, Cons(x, Nil))((x, res) => Cons(x, res))
+  }
 }
