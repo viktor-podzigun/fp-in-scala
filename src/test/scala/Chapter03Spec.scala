@@ -196,6 +196,14 @@ class Chapter03Spec extends FlatSpec with Matchers {
     map(List(1.0, 2.0, 3.0))(_.toString) shouldBe List("1.0", "2.0", "3.0")
   }
 
+  "filter" should "remove elements from a list unless they satisfy a given predicate" in {
+    //when & then
+    filter(List[Int]())(_ > 0) shouldBe List()
+    filter(List(1))(_ < 0) shouldBe List()
+    filter(List(1, 2))(_ != 0) shouldBe List(1, 2)
+    filter(List(1, 2, 3))(x => (x % 2) == 0) shouldBe List(2)
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }

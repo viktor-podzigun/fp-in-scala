@@ -238,4 +238,17 @@ object Chapter03 {
   def map[A, B](as: List[A])(f: A => B): List[B] = {
     reverse(foldLeft(as, Nil:List[B])((res, x) => Cons(f(x), res)))
   }
+
+  /**
+    * Exercise 3.19
+    *
+    * Write a function `filter` that removes elements from a list unless they satisfy a given predicate.
+    * Use it to remove all odd numbers from a `List[Int]`.
+    */
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+    reverse(foldLeft(as, Nil:List[A]) { (res, x) =>
+      if (f(x)) Cons(x, res)
+      else res
+    })
+  }
 }
