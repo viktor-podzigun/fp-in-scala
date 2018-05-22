@@ -172,6 +172,14 @@ class Chapter03Spec extends FlatSpec with Matchers {
     concatenate(List(List(1, 2, 3), List(4), List(5, 6))) shouldBe List(1, 2, 3, 4, 5, 6)
   }
 
+  "increment" should "transform a list of integers by adding 1 to each element" in {
+    //when & then
+    increment(List()) shouldBe List()
+    increment(List(1)) shouldBe List(2)
+    increment(List(1, 2)) shouldBe List(2, 3)
+    increment(List(1, 2, 3)) shouldBe List(2, 3, 4)
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }

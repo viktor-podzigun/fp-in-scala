@@ -208,4 +208,14 @@ object Chapter03 {
   def concatenate[A](lists: List[List[A]]): List[A] = {
     foldRight2(lists, Nil: List[A])((x, res) => append(x, res))
   }
+
+  /**
+    * Exercise 3.16
+    *
+    * Write a function that transforms a list of integers by adding `1` to each element.
+    * (Reminder: this should be a pure function that returns a new `List`!)
+    */
+  def increment(list: List[Int]): List[Int] = {
+    foldRight2(list, Nil:List[Int])((x, res) => Cons(x + 1, res))
+  }
 }
