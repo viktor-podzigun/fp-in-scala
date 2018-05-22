@@ -188,6 +188,14 @@ class Chapter03Spec extends FlatSpec with Matchers {
     Chapter03.toString(List(1.0, 2.0, 3.0)) shouldBe List("1.0", "2.0", "3.0")
   }
 
+  "map" should "generalize modifying each element in a list" in {
+    //when & then
+    map(List())(_.toString) shouldBe List()
+    map(List(1.0))(_.toString) shouldBe List("1.0")
+    map(List(1.0, 2.0))(_.toString) shouldBe List("1.0", "2.0")
+    map(List(1.0, 2.0, 3.0))(_.toString) shouldBe List("1.0", "2.0", "3.0")
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }

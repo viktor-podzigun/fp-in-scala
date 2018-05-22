@@ -228,4 +228,14 @@ object Chapter03 {
   def toString(list: List[Double]): List[String] = {
     foldRight2(list, Nil:List[String])((x, res) => Cons(x.toString, res))
   }
+
+  /**
+    * Exercise 3.18
+    *
+    * Write a function `map` that generalizes modifying each element in a list
+    * while maintaining the structure of the list.
+    */
+  def map[A, B](as: List[A])(f: A => B): List[B] = {
+    reverse(foldLeft(as, Nil:List[B])((res, x) => Cons(f(x), res)))
+  }
 }
