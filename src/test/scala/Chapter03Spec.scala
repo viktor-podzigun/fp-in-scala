@@ -180,6 +180,14 @@ class Chapter03Spec extends FlatSpec with Matchers {
     increment(List(1, 2, 3)) shouldBe List(2, 3, 4)
   }
 
+  "toString" should "turn each value in a List[Double] into a String" in {
+    //when & then
+    Chapter03.toString(List()) shouldBe List()
+    Chapter03.toString(List(1.0)) shouldBe List("1.0")
+    Chapter03.toString(List(1.0, 2.0)) shouldBe List("1.0", "2.0")
+    Chapter03.toString(List(1.0, 2.0, 3.0)) shouldBe List("1.0", "2.0", "3.0")
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }

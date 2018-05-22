@@ -218,4 +218,14 @@ object Chapter03 {
   def increment(list: List[Int]): List[Int] = {
     foldRight2(list, Nil:List[Int])((x, res) => Cons(x + 1, res))
   }
+
+  /**
+    * Exercise 3.17
+    *
+    * Write a function that turns each value in a `List[Double]` into a `String`.
+    * You can use the expression `d.toString` to convert some `d: Double` to a `String`.
+    */
+  def toString(list: List[Double]): List[String] = {
+    foldRight2(list, Nil:List[String])((x, res) => Cons(x.toString, res))
+  }
 }
