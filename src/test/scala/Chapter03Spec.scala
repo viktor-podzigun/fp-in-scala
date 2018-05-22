@@ -204,6 +204,15 @@ class Chapter03Spec extends FlatSpec with Matchers {
     filter(List(1, 2, 3))(x => (x % 2) == 0) shouldBe List(2)
   }
 
+  "flatMap" should "work like a map but with flattening the result lists" in {
+    //when & then
+    flatMap(List[Int]())(x => List(x, x)) shouldBe List()
+    flatMap(List(1))(x => List(x, x)) shouldBe List(1, 1)
+    flatMap(List(1, 2))(x => List(x, x)) shouldBe List(1, 1, 2, 2)
+    flatMap(List(1, 2, 3))(x => List(x, x)) shouldBe List(1, 1, 2, 2, 3, 3)
+    flatMap(List(1, 2, 3))(x => List(x, x + 1)) shouldBe List(1, 2, 2, 3, 3, 4)
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }
