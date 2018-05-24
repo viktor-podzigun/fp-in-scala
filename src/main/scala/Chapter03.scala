@@ -275,4 +275,26 @@ object Chapter03 {
       else Nil
     }
   }
+
+  /**
+    * Exercise 3.22
+    *
+    * Write a function that accepts two lists and constructs a new list by adding corresponding elements.
+    * For example, `List(1,2,3)` and `List(4,5,6)` become `List(5,7,9)`.
+    */
+  def zipAndAdd(list1: List[Int], list2: List[Int]): List[Int] = {
+    @tailrec
+    def loop(xs1: List[Int], xs2: List[Int], res: List[Int]): List[Int] = xs1 match {
+      case Nil => xs2 match {
+        case Nil => res
+        case Cons(h, t) => loop(xs1, t, Cons(h, res))
+      }
+      case Cons(h, t) => xs2 match {
+        case Nil => loop(t, xs2, Cons(h, res))
+        case Cons(h2, t2) => loop(t, t2, Cons(h + h2, res))
+      }
+    }
+
+    reverse(loop(list1, list2, Nil))
+  }
 }

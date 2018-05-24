@@ -221,6 +221,16 @@ class Chapter03Spec extends FlatSpec with Matchers {
     filterUsingFlatMap(List(1, 2, 3))(x => (x % 2) == 0) shouldBe List(2)
   }
 
+  "zipAndAdd" should "accept two lists and construct a new list by adding corresponding elements" in {
+    //when & then
+    zipAndAdd(List(), List()) shouldBe List()
+    zipAndAdd(List(1), List(1)) shouldBe List(2)
+    zipAndAdd(List(1), List(1, 3)) shouldBe List(2, 3)
+    zipAndAdd(List(1, 3), List(1)) shouldBe List(2, 3)
+    zipAndAdd(List(1, 2, 3), List()) shouldBe List(1, 2, 3)
+    zipAndAdd(List(1, 2, 3), List(4, 5, 6)) shouldBe List(5, 7, 9)
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }
