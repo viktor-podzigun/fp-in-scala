@@ -263,4 +263,16 @@ object Chapter03 {
   def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] = {
     concatenate(reverse(foldLeft(as, Nil:List[List[B]])((res, x) => Cons(f(x), res))))
   }
+
+  /**
+    * Exercise 3.21
+    *
+    * Use `flatMap` to implement `filter`.
+    */
+  def filterUsingFlatMap[A](as: List[A])(f: A => Boolean): List[A] = {
+    flatMap(as) { x =>
+      if (f(x)) Cons(x, Nil)
+      else Nil
+    }
+  }
 }
