@@ -231,6 +231,17 @@ class Chapter03Spec extends FlatSpec with Matchers {
     zipAndAdd(List(1, 2, 3), List(4, 5, 6)) shouldBe List(5, 7, 9)
   }
 
+  "zipWith" should "be generic version of zipAndAdd" in {
+    //when & then
+    zipWith[Int](List(), List())(_ + _) shouldBe List()
+    zipWith(List(1), List(1))(_ + _) shouldBe List(2)
+    zipWith(List(1), List(1))(_ - _) shouldBe List(0)
+    zipWith(List(1), List(1, 3))(_ + _) shouldBe List(2)
+    zipWith(List(1, 3), List(1))(_ - _) shouldBe List(0)
+    zipWith(List(1, 2, 3), List())(_ + _) shouldBe List()
+    zipWith(List(1.0, 2.0, 3.0), List(4.0, 5.0, 6.0))(_ + _) shouldBe List(5.0, 7.0, 9.0)
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }

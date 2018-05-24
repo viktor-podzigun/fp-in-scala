@@ -297,4 +297,23 @@ object Chapter03 {
 
     reverse(loop(list1, list2, Nil))
   }
+
+  /**
+    * Exercise 3.23
+    *
+    * Generalize the function you just wrote so that it's not specific to integers or addition.
+    * Name your generalized function `zipWith`.
+    */
+  def zipWith[A](list1: List[A], list2: List[A])(f: (A, A) => A): List[A] = {
+    @tailrec
+    def loop(xs1: List[A], xs2: List[A], res: List[A]): List[A] = xs1 match {
+      case Nil => res
+      case Cons(h, t) => xs2 match {
+        case Nil => res
+        case Cons(h2, t2) => loop(t, t2, Cons(f(h, h2), res))
+      }
+    }
+
+    reverse(loop(list1, list2, Nil))
+  }
 }
