@@ -242,6 +242,21 @@ class Chapter03Spec extends FlatSpec with Matchers {
     zipWith(List(1.0, 2.0, 3.0), List(4.0, 5.0, 6.0))(_ + _) shouldBe List(5.0, 7.0, 9.0)
   }
 
+  "hasSubsequence" should "check whether a List contains another List as a subsequence" in {
+    //when & then
+    hasSubsequence(List(), List()) shouldBe true
+    hasSubsequence(List(1, 2, 3), List()) shouldBe true
+    hasSubsequence(List(1), List(1)) shouldBe true
+    hasSubsequence(List(1, 3), List(1)) shouldBe true
+    hasSubsequence(List(1, 2, 3, 4), List(1, 2)) shouldBe true
+    hasSubsequence(List(1, 2, 3, 4), List(2, 3)) shouldBe true
+    hasSubsequence(List(1, 2, 3, 4), List(4)) shouldBe true
+    hasSubsequence(List(), List(1)) shouldBe false
+    hasSubsequence(List(1), List(1, 3)) shouldBe false
+    hasSubsequence(List(1), List(3)) shouldBe false
+    hasSubsequence(List(1, 2, 3), List(3, 2)) shouldBe false
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }
