@@ -282,6 +282,15 @@ class Chapter03Spec extends FlatSpec with Matchers {
     depth(Branch(Leaf(1), Branch(Branch(Leaf(2), Leaf(3)), Leaf(4)))) shouldBe 4
   }
 
+  "treeMap" should "generalize modifying each element in a tree" in {
+    //when & then
+    treeMap(Leaf(5))(_.toString) shouldBe Leaf("5")
+    treeMap(Branch(Leaf(1), Leaf(2)))(_.toString) shouldBe Branch(Leaf("1"), Leaf("2"))
+    treeMap(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_.toString) shouldBe {
+      Branch(Leaf("1"), Branch(Leaf("2"), Leaf("3")))
+    }
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }
