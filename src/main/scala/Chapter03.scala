@@ -350,4 +350,18 @@ object Chapter03 {
 
     loop(sup)
   }
+
+  /**
+    * Exercise 3.25
+    *
+    * Write a function `size` that counts the number of nodes (leaves and branches) in a tree.
+    */
+  def treeSize[A](tree: Tree[A]): Int = {
+    def loop(tree: Tree[A]): Int = tree match {
+      case Leaf(_) => 1
+      case Branch(l, r) => loop(l) + loop(r) + 1
+    }
+
+    loop(tree)
+  }
 }

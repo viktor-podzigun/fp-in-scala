@@ -257,6 +257,13 @@ class Chapter03Spec extends FlatSpec with Matchers {
     hasSubsequence(List(1, 2, 3), List(3, 2)) shouldBe false
   }
 
+  "treeSize" should "count the number of nodes (leaves and branches) in a tree" in {
+    //when & then
+    treeSize(Leaf(5)) shouldBe 1
+    treeSize(Branch(Leaf(1), Leaf(2))) shouldBe 3
+    treeSize(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 5
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }
