@@ -273,6 +273,15 @@ class Chapter03Spec extends FlatSpec with Matchers {
     maximum(Branch(Leaf(1), Branch(Leaf(3), Leaf(2)))) shouldBe 3
   }
 
+  "depth" should "return the maximum path length from the root of a tree to any leaf" in {
+    //when & then
+    depth(Leaf(5)) shouldBe 1
+    depth(Branch(Leaf(1), Leaf(3))) shouldBe 2
+    depth(Branch(Leaf(3), Leaf(1))) shouldBe 2
+    depth(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 3
+    depth(Branch(Leaf(1), Branch(Branch(Leaf(2), Leaf(3)), Leaf(4)))) shouldBe 4
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }

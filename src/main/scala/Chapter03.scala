@@ -379,4 +379,18 @@ object Chapter03 {
 
     loop(tree, Int.MinValue)
   }
+
+  /**
+    * Exercise 3.27
+    *
+    * Write a function `depth` that returns the maximum path length from the root of a tree to any leaf.
+    */
+  def depth[A](tree: Tree[A]): Int = {
+    def loop(tree: Tree[A], depth: Int): Int = tree match {
+      case Leaf(_) => depth + 1
+      case Branch(l, r) => loop(l, depth + 1).max(loop(r, depth + 1))
+    }
+
+    loop(tree, 0)
+  }
 }
