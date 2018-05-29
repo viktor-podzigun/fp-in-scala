@@ -364,4 +364,19 @@ object Chapter03 {
 
     loop(tree)
   }
+
+  /**
+    * Exercise 3.26
+    *
+    * Write a function `maximum` that returns the maximum element in a `Tree[Int]`.
+    * (Note: In Scala, you can use `x.max(y)` or `x max y` to compute the maximum of two integers `x` and `y`.)
+    */
+  def maximum(tree: Tree[Int]): Int = {
+    def loop(tree: Tree[Int], max: Int): Int = tree match {
+      case Leaf(v) => v.max(max)
+      case Branch(l, r) => loop(l, max).max(loop(r, max))
+    }
+
+    loop(tree, Int.MinValue)
+  }
 }

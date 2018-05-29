@@ -264,6 +264,15 @@ class Chapter03Spec extends FlatSpec with Matchers {
     treeSize(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 5
   }
 
+  "maximum" should "return the maximum element in a Tree[Int]" in {
+    //when & then
+    maximum(Leaf(5)) shouldBe 5
+    maximum(Branch(Leaf(1), Leaf(2))) shouldBe 2
+    maximum(Branch(Leaf(2), Leaf(1))) shouldBe 2
+    maximum(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 3
+    maximum(Branch(Leaf(1), Branch(Leaf(3), Leaf(2)))) shouldBe 3
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }
