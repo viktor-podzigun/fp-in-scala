@@ -291,6 +291,41 @@ class Chapter03Spec extends FlatSpec with Matchers {
     }
   }
 
+  "sizeUsingFold" should "count the number of nodes (leaves and branches) in a tree" in {
+    //when & then
+    sizeUsingFold(Leaf(5)) shouldBe 1
+    sizeUsingFold(Branch(Leaf(1), Leaf(2))) shouldBe 3
+    sizeUsingFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 5
+  }
+
+  "maximumUsingFold" should "return the maximum element in a Tree[Int]" in {
+    //when & then
+    maximumUsingFold(Leaf(-1)) shouldBe -1
+    maximumUsingFold(Leaf(5)) shouldBe 5
+    maximumUsingFold(Branch(Leaf(1), Leaf(2))) shouldBe 2
+    maximumUsingFold(Branch(Leaf(2), Leaf(-1))) shouldBe 2
+    maximumUsingFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 3
+    maximumUsingFold(Branch(Leaf(1), Branch(Leaf(3), Leaf(2)))) shouldBe 3
+  }
+
+  "depthUsingFold" should "return the maximum path length from the root of a tree to any leaf" in {
+    //when & then
+    depthUsingFold(Leaf(5)) shouldBe 1
+    depthUsingFold(Branch(Leaf(1), Leaf(3))) shouldBe 2
+    depthUsingFold(Branch(Leaf(3), Leaf(1))) shouldBe 2
+    depthUsingFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 3
+    depthUsingFold(Branch(Leaf(1), Branch(Branch(Leaf(2), Leaf(3)), Leaf(4)))) shouldBe 4
+  }
+
+  "mapUsingFold" should "generalize modifying each element in a tree" in {
+    //when & then
+    mapUsingFold(Leaf(5))(_.toString) shouldBe Leaf("5")
+    mapUsingFold(Branch(Leaf(1), Leaf(2)))(_.toString) shouldBe Branch(Leaf("1"), Leaf("2"))
+    mapUsingFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_.toString) shouldBe {
+      Branch(Leaf("1"), Branch(Leaf("2"), Leaf("3")))
+    }
+  }
+
   private def assertSameList[A](xs: List[A], f: List[A] => List[A]): Unit = {
     f(xs) should be theSameInstanceAs xs
   }

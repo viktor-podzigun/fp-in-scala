@@ -408,4 +408,30 @@ object Chapter03 {
 
     loop(tree)
   }
+
+  /**
+    * Exercise 3.29
+    *
+    * Generalize `size`, `maximum`, `depth`, and `map`, writing a new function `fold`
+    * that abstracts over their similarities. Reimplement them in terms of this more general function.
+    * Can you draw an analogy between this `fold` function and the left and right folds for `List`?
+    */
+  def fold[A, B](tree: Tree[A], z: B)(f1: (A, B) => B)(f2: (B, B) => B): B = {
+    def loop(tree: Tree[A], z: B): B = tree match {
+      case Leaf(v) => f1(v, z)
+      case Branch(l, r) => f2(loop(l, z), loop(r, z))
+    }
+
+    loop(tree, z)
+  }
+
+  def sizeUsingFold[A](tree: Tree[A]): Int = fold(tree, 0)((_, _) => 1)(_ + _ + 1)
+
+  def maximumUsingFold(tree: Tree[Int]): Int = fold(tree, Int.MinValue)(_ max _)(_ max _)
+
+  def depthUsingFold[A](tree: Tree[A]): Int = fold(tree, 0)((_, d) => d + 1)(_.max(_) + 1)
+
+  def mapUsingFold[A, B](tree: Tree[A])(f: A => B): Tree[B] = {
+    fold(tree, null: Tree[B])((v, _) => Leaf(f(v)))(Branch(_, _))
+  }
 }
