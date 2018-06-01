@@ -79,4 +79,12 @@ class Chapter04Spec extends FlatSpec
     variance(Seq()) shouldBe None
     variance(Seq(1, 2, 3)) shouldBe Some(0.6666666666666666d)
   }
+
+  "map2" should "combine two Option values using a binary function" in {
+    //when & then
+    map2(None: Option[Int], None)(_ + _) shouldBe None
+    map2(Some(1), None)(_ + _) shouldBe None
+    map2(None: Option[Int], Some(1))(_ + _) shouldBe None
+    map2(Some(1), Some(2))(_ + _) shouldBe Some(3)
+  }
 }
