@@ -87,4 +87,13 @@ class Chapter04Spec extends FlatSpec
     map2(None: Option[Int], Some(1))(_ + _) shouldBe None
     map2(Some(1), Some(2))(_ + _) shouldBe Some(3)
   }
+
+  "Option.sequence" should "combine a list of Options into one Option" in {
+    //when & then
+    Option.sequence(List(None, Some(1))) shouldBe None
+    Option.sequence(List(Some(1), None)) shouldBe None
+    Option.sequence(List(Some(1), None, Some(2))) shouldBe None
+    Option.sequence(List(Some(1), Some(2), None)) shouldBe None
+    Option.sequence(List(Some(1), Some(2), Some(3))) shouldBe Some(List(1, 2, 3))
+  }
 }

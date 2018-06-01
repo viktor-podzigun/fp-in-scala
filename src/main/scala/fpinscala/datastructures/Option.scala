@@ -36,6 +36,16 @@ sealed trait Option[+A] {
   }
 }
 
+object Option {
+
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = {
+    Some(List.foldRight(a, Nil: List[A]) {
+      case (None, _) => return None
+      case (Some(x), res) => Cons(x, res)
+    })
+  }
+}
+
 case class Some[+A](get: A) extends Option[A]
 
 case object None extends Option[Nothing]
