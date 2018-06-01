@@ -44,6 +44,17 @@ object Option {
       case (Some(x), res) => Cons(x, res)
     })
   }
+
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = {
+    Some(List.foldRight(a, Nil: List[B]) { (x, res) =>
+      f(x) match {
+        case None => return None
+        case Some(b) => Cons(b, res)
+      }
+    })
+  }
+
+  def sequence2[A](a: List[Option[A]]): Option[List[A]] = traverse(a)(identity)
 }
 
 case class Some[+A](get: A) extends Option[A]

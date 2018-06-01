@@ -61,4 +61,16 @@ object Chapter04 {
     *
     * @see [[Option.sequence]]
     */
+
+  /**
+    * Exercise 4.5
+    *
+    * Implement `traverse` function.
+    * It's straightforward to do using `map` and `sequence`, but try for a more efficient implementation
+    * that only looks at the list once.
+    * In fact, implement `sequence` in terms of `traverse`.
+    *
+    * @see [[Option.traverse]]
+    * @see [[Option.sequence2]]
+    */
 }

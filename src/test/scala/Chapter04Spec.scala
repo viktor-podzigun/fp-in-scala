@@ -90,10 +90,30 @@ class Chapter04Spec extends FlatSpec
 
   "Option.sequence" should "combine a list of Options into one Option" in {
     //when & then
+    Option.sequence(List()) shouldBe Some(List())
     Option.sequence(List(None, Some(1))) shouldBe None
     Option.sequence(List(Some(1), None)) shouldBe None
     Option.sequence(List(Some(1), None, Some(2))) shouldBe None
     Option.sequence(List(Some(1), Some(2), None)) shouldBe None
     Option.sequence(List(Some(1), Some(2), Some(3))) shouldBe Some(List(1, 2, 3))
+  }
+
+  "Option.traverse" should "combine a list of Options into one Option" in {
+    //when & then
+    Option.traverse(List())(_ => None) shouldBe Some(List())
+    Option.traverse(List(1))(_ => None) shouldBe None
+    Option.traverse(List(1, 2))(_ => None) shouldBe None
+    Option.traverse(List(1, 2))(x => if (x == 2) None else Some(x)) shouldBe None
+    Option.traverse(List(1, 2, 3))(x => Some(x)) shouldBe Some(List(1, 2, 3))
+  }
+
+  "Option.sequence2" should "combine a list of Options into one Option" in {
+    //when & then
+    Option.sequence2(List()) shouldBe Some(List())
+    Option.sequence2(List(None, Some(1))) shouldBe None
+    Option.sequence2(List(Some(1), None)) shouldBe None
+    Option.sequence2(List(Some(1), None, Some(2))) shouldBe None
+    Option.sequence2(List(Some(1), Some(2), None)) shouldBe None
+    Option.sequence2(List(Some(1), Some(2), Some(3))) shouldBe Some(List(1, 2, 3))
   }
 }
