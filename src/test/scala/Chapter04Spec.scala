@@ -67,4 +67,16 @@ class Chapter04Spec extends FlatSpec
     Some(1).filter(_ => false) shouldBe None
     Some(2).filter(_ => true) shouldBe Some(2)
   }
+
+  "mean" should "return the mean of a Seq" in {
+    //when & then
+    mean(Seq()) shouldBe None
+    mean(Seq(1, 2, 3)) shouldBe Some(2.0d)
+  }
+
+  "variance" should "return the variance of a Seq" in {
+    //when & then
+    variance(Seq()) shouldBe None
+    variance(Seq(1, 2, 3)) shouldBe Some(0.6666666666666666d)
+  }
 }
