@@ -105,7 +105,7 @@ class Chapter03Spec extends FlatSpec with Matchers {
 
   "foldLeft" should "traverse elements from left to right" in {
     //when & then
-    foldLeft(List(1, 2, 3), Nil: List[Int])((res, x) => Cons(x, res)) shouldBe List(3, 2, 1)
+    List.foldLeft(List(1, 2, 3), Nil: List[Int])((res, x) => Cons(x, res)) shouldBe List(3, 2, 1)
   }
 
   "sum3" should "return product of elements of a List using foldLeft" in {
@@ -133,12 +133,12 @@ class Chapter03Spec extends FlatSpec with Matchers {
 
   "reverse" should "return length of a List using foldLeft" in {
     //when & then
-    assertSameList(List(), reverse(_: List[Int]))
-    assertSameList(List(1), reverse(_: List[Int]))
+    assertSameList(List(), List.reverse(_: List[Int]))
+    assertSameList(List(1), List.reverse(_: List[Int]))
 
-    reverse(List(1, 2)) shouldBe List(2, 1)
-    reverse(List(1, 2, 3)) shouldBe List(3, 2, 1)
-    reverse(List(1, 2, 3, 4)) shouldBe List(4, 3, 2, 1)
+    List.reverse(List(1, 2)) shouldBe List(2, 1)
+    List.reverse(List(1, 2, 3)) shouldBe List(3, 2, 1)
+    List.reverse(List(1, 2, 3, 4)) shouldBe List(4, 3, 2, 1)
   }
 
   "foldRight2" should "traverse elements from right to left" in {

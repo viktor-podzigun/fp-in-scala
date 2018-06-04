@@ -158,4 +158,22 @@ class Chapter04Spec extends FlatSpec
     Right(1).map2(Left(2))(_ + _) shouldBe Left(2)
     Right(1).map2(Right(2))(_ + _) shouldBe Right(3)
   }
+
+  "Either.sequence" should "combine a list of Eithers into one Either" in {
+    //when & then
+    Either.sequence(List()) shouldBe Right(List())
+    Either.sequence(List(Left(1), Right(2))) shouldBe Left(1)
+    Either.sequence(List(Right(1), Left(2), Left(3))) shouldBe Left(2)
+    Either.sequence(List(Right(1), Right(2), Left(3))) shouldBe Left(3)
+    Either.sequence(List(Right(1), Right(2), Right(3))) shouldBe Right(List(1, 2, 3))
+  }
+
+  "Either.traverse" should "combine a list of Eithers into one Either" in {
+    //when & then
+    Either.traverse(List())(_ => Left(1)) shouldBe Right(List())
+    Either.traverse(List(1))(_ => Left(2)) shouldBe Left(2)
+    Either.traverse(List(1, 2))(_ => Left(3)) shouldBe Left(3)
+    Either.traverse(List(1, 2))(x => if (x == 2) Left(2) else Right(x)) shouldBe Left(2)
+    Either.traverse(List(1, 2, 3))(x => Right(x)) shouldBe Right(List(1, 2, 3))
+  }
 }

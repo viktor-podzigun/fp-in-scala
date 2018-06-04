@@ -85,4 +85,14 @@ object Chapter04 {
     * @see [[Either.orElse]]
     * @see [[Either.map2]]
     */
+
+  /**
+    * Exercise 4.7
+    *
+    * Implement `sequence` and `traverse` for `Either`.
+    * These should return the first error that's encountered, if there is one.
+    *
+    * @see [[Either.sequence]]
+    * @see [[Either.traverse]]
+    */
 }

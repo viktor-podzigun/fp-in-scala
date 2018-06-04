@@ -30,6 +30,20 @@ sealed trait Either[+E, +A] {
   }
 }
 
+object Either {
+
+  def sequence[E, A](es: List[Either[E, A]]): Either[E, List[A]] = traverse(es)(identity)
+
+  def traverse[E, A, B](as: List[A])(f: A => Either[E, B]): Either[E, List[B]] = {
+    Right(List.reverse(List.foldLeft(as, Nil: List[B]) { (res, a) =>
+      f(a) match {
+        case Left(x) => return Left(x)
+        case Right(b) => Cons(b, res)
+      }
+    }))
+  }
+}
+
 case class Left[+E](value: E) extends Either[E, Nothing]
 
 case class Right[+A](value: A) extends Either[Nothing, A]

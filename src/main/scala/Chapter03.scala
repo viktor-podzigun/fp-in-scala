@@ -141,16 +141,9 @@ object Chapter03 {
     * for large lists (we say it's not stack-safe).
     * Convince yourself that this is the case, and then write another general list-recursion function,
     * `foldLeft`, that is tail-recursive, using the techniques we discussed in the previous chapter.
+    *
+    * @see [[List.foldLeft]]
     */
-  def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = {
-    @tailrec
-    def loop(xs: List[A], res: B): B = xs match {
-      case Nil => res
-      case Cons(h, t) => loop(t, f(res, h))
-    }
-
-    loop(as, z)
-  }
 
   /**
     * Exercise 3.11
@@ -170,12 +163,9 @@ object Chapter03 {
     *
     * Write a function that returns the reverse of a list (given `List(1,2,3)` it returns `List(3,2,1)`).
     * See if you can write it using a fold.
+    *
+    * @see [[List.reverse]]
     */
-  def reverse[A](list: List[A]): List[A] = list match {
-    case Nil => list
-    case Cons(_, Nil) => list
-    case _ => foldLeft(list, Nil: List[A])((res, x) => Cons(x, res))
-  }
 
   /**
     * Exercise 3.13
