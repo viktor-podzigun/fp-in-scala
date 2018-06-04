@@ -116,4 +116,46 @@ class Chapter04Spec extends FlatSpec
     Option.sequence2(List(Some(1), Some(2), None)) shouldBe None
     Option.sequence2(List(Some(1), Some(2), Some(3))) shouldBe Some(List(1, 2, 3))
   }
+
+  "Either.map" should "apply f if the Either is Right" in {
+    //when & then
+    Left(1).map(identity) shouldBe Left(1)
+    Right(1).map(_ * 2) shouldBe Right(2)
+    Right(2).map(_ * 2) shouldBe Right(4)
+  }
+
+  "Either.flatMap" should "apply f, which may fail, to the Either if Right" in {
+    //when & then
+    Left(1).flatMap(identity) shouldBe Left(1)
+    Right(1).flatMap(_ => Left(1)) shouldBe Left(1)
+    Right(1).flatMap(v => Right(v * 2)) shouldBe Right(2)
+    Right(2).flatMap(v => Right(v * 2)) shouldBe Right(4)
+  }
+
+  "Either.orElse" should "not evaluate b unless needed" in {
+    //when & then
+    Left(1).orElse(Left(2)) shouldBe Left(2)
+    Left(1).orElse(Right(1)) shouldBe Right(1)
+    Right(1).orElse(Right(2)) shouldBe Right(1)
+    Right(2).orElse(Right(1)) shouldBe Right(2)
+  }
+
+  it should "not evaluate b for Right" in {
+    //given
+    val b = mockFunction[Either[Int, Int]]
+
+    //then
+    b.expects().never()
+
+    //when
+    Right(1).orElse(b()) shouldBe Right(1)
+  }
+
+  "Either.map2" should "combine two Either values using a binary function" in {
+    //when & then
+    Left(1).map2(Left(2))((_, b) => b) shouldBe Left(1)
+    Left(1).map2(Right(2))((_, b) => b) shouldBe Left(1)
+    Right(1).map2(Left(2))(_ + _) shouldBe Left(2)
+    Right(1).map2(Right(2))(_ + _) shouldBe Right(3)
+  }
 }

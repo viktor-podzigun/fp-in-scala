@@ -73,4 +73,16 @@ object Chapter04 {
     * @see [[Option.traverse]]
     * @see [[Option.sequence2]]
     */
+
+  /**
+    * Exercise 4.6
+    *
+    * Implement versions of `map`, `flatMap`, `orElse`, and `map2` on `Either`
+    * that operate on the `Right` value.
+    *
+    * @see [[Either.map]]
+    * @see [[Either.flatMap]]
+    * @see [[Either.orElse]]
+    * @see [[Either.map2]]
+    */
 }
