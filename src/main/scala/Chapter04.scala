@@ -95,4 +95,40 @@ object Chapter04 {
     * @see [[Either.sequence]]
     * @see [[Either.traverse]]
     */
+
+  /**
+    * Exercise 4.8
+    *
+    * In this implementation, `map2` is only able to report one error,
+    * even if both the name and the age are invalid. What would you need to change
+    * in order to report both errors? Would you change `map2` or the signature of `mkPerson`?
+    * Or could you create a new data type that captures this requirement better than `Either` does,
+    * with some additional structure?
+    * How would `orElse`, `traverse`, and `sequence` behave differently for that data type?
+    *
+    * @see [[mkPerson2]]
+    */
+  case class Person(name: Name, age: Age)
+  case class Name(value: String)
+  case class Age(value: Int)
+
+  def mkName(name: String): Either[String, Name] =
+    if (name == "" || name == null) Left("Name is empty.")
+    else Right(Name(name))
+
+  def mkAge(age: Int): Either[String, Age] =
+    if (age < 0) Left("Age is out of range.")
+    else Right(Age(age))
+
+  def mkPerson(name: String, age: Int): Either[String, Person] =
+    mkName(name).map2(mkAge(age))(Person)
+
+  def mkPerson2(name: String, age: Int): Either[List[String], Person] = {
+    (mkName(name), mkAge(age)) match {
+      case (Left(e1), Left(e2)) => Left(List(e1, e2))
+      case (Left(e), _) => Left(List(e))
+      case (_, Left(e)) => Left(List(e))
+      case (Right(n), Right(a)) => Right(Person(n, a))
+    }
+  }
 }

@@ -176,4 +176,19 @@ class Chapter04Spec extends FlatSpec
     Either.traverse(List(1, 2))(x => if (x == 2) Left(2) else Right(x)) shouldBe Left(2)
     Either.traverse(List(1, 2, 3))(x => Right(x)) shouldBe Right(List(1, 2, 3))
   }
+
+  "mkPerson2" should "return both errors if the name and the age are invalid" in {
+    //when & then
+    mkPerson2("", -1) shouldBe Left(List(
+      "Name is empty.",
+      "Age is out of range."
+    ))
+    mkPerson2("", 37) shouldBe Left(List(
+      "Name is empty."
+    ))
+    mkPerson2("Viktor", -1) shouldBe Left(List(
+      "Age is out of range."
+    ))
+    mkPerson2("Viktor", 37) shouldBe Right(Person(Name("Viktor"), Age(37)))
+  }
 }
