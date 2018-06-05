@@ -13,4 +13,14 @@ object Chapter05 {
     *
     * @see [[Stream.toList]]
     */
+
+  /**
+    * Exercise 5.2
+    *
+    * Write the function `take(n)` for returning the first `n` elements of a `Stream`,
+    * and `drop(n)` for skipping the first `n` elements of a `Stream`.
+    *
+    * @see [[Stream.take]]
+    * @see [[Stream.drop]]
+    */
 }
