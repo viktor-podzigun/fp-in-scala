@@ -34,4 +34,16 @@ class Chapter05Spec extends FlatSpec
     Stream(1, 2, 3).drop(3).toList shouldBe Nil
     Stream(1, 2, 3).drop(4).toList shouldBe Nil
   }
+
+  "Stream.takeWhile" should "return all starting elements that match given predicate" in {
+    //when & then
+    Stream().takeWhile(_ => false).toList shouldBe Nil
+    Stream().takeWhile(_ => true).toList shouldBe Nil
+    Stream(1, 2, 3).takeWhile(_ => false).toList shouldBe Nil
+    Stream(1, 2, 3).takeWhile(_ < 0).toList shouldBe Nil
+    Stream(1, 2, 3).takeWhile(_ == 1).toList shouldBe List(1)
+    Stream(1, 1, 2, 3).takeWhile(_ == 1).toList shouldBe List(1, 1)
+    Stream(1, 2, 3).takeWhile(_ < 3).toList shouldBe List(1, 2)
+    Stream(1, 2, 3).takeWhile(_ < 5).toList shouldBe List(1, 2, 3)
+  }
 }

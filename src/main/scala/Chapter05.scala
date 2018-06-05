@@ -23,4 +23,13 @@ object Chapter05 {
     * @see [[Stream.take]]
     * @see [[Stream.drop]]
     */
+
+  /**
+    * Exercise 5.3
+    *
+    * Write the function `takeWhile` for returning all starting elements of a `Stream`
+    * that match the given predicate.
+    *
+    * @see [[Stream.takeWhile]]
+    */
 }
