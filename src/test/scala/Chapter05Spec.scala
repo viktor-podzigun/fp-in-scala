@@ -46,4 +46,27 @@ class Chapter05Spec extends FlatSpec
     Stream(1, 2, 3).takeWhile(_ < 3).toList shouldBe List(1, 2)
     Stream(1, 2, 3).takeWhile(_ < 5).toList shouldBe List(1, 2, 3)
   }
+
+  "Stream.forAll" should "check that all elements in the Stream match a given predicate" in {
+    //when & then
+    Stream().forAll(_ => false) shouldBe true
+    Stream().forAll(_ => true) shouldBe true
+    Stream(1, 2, 3).forAll(_ => false) shouldBe false
+    Stream(1, 2, 3).forAll(_ => true) shouldBe true
+    Stream(1, 2, 3).forAll(_ < 0) shouldBe false
+    Stream(1, 2, 3).forAll(_ > 0) shouldBe true
+    Stream(1, 2, 3).forAll(_ == 1) shouldBe false
+    Stream(1, 1, 1).forAll(_ == 1) shouldBe true
+  }
+
+  it should "terminate the traversal as soon as it encounters a non-matching value" in {
+    //given
+    val tail = mockFunction[Stream[Int]]
+
+    //then
+    tail.expects().never()
+
+    //when
+    Stream.cons(1, Stream.cons(2, tail())).forAll(_ == 1) shouldBe false
+  }
 }
