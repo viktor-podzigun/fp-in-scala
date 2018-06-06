@@ -57,4 +57,16 @@ object Chapter05 {
     *
     * @see [[Stream.headOptionUsingFoldRight]]
     */
+
+  /**
+    * Exercise 5.7
+    *
+    * Implement `map`, `filter`, `append`, and `flatMap` using `foldRight`.
+    * The `append` method should be non-strict in its argument.
+    *
+    * @see [[Stream.map]]
+    * @see [[Stream.filter]]
+    * @see [[Stream.append]]
+    * @see [[Stream.flatMap]]
+    */
 }

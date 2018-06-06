@@ -109,4 +109,33 @@ class Chapter05Spec extends FlatSpec
     //when
     Stream.cons(1, tail()).headOptionUsingFoldRight shouldBe Some(1)
   }
+
+  "Stream.map" should "convert all the elements in a Stream according to the given function" in {
+    //when & then
+    Stream().map(identity).toList shouldBe Nil
+    Stream(1, 2, 3).map(_ * 2).toList shouldBe List(2, 4, 6)
+  }
+
+  "Stream.filter" should "return all the elements of a Stream that satisfy the given predicate" in {
+    //when & then
+    Stream().filter(_ => true).toList shouldBe Nil
+    Stream(2, 1, 2, 3, 1, 2, 1).filter(_ > 1).toList shouldBe List(2, 2, 3, 2)
+  }
+
+  "Stream.append" should "append all the elements of the given Stream to the end of the current Stream" in {
+    //when & then
+    Stream().append(Stream()).toList shouldBe Nil
+    Stream(1).append(Stream()).toList shouldBe List(1)
+    Stream().append(Stream(1)).toList shouldBe List(1)
+    Stream(1).append(Stream(2)).toList shouldBe List(1, 2)
+    Stream(1).append(Stream(2, 3)).toList shouldBe List(1, 2, 3)
+    Stream(1, 2).append(Stream(3)).toList shouldBe List(1, 2, 3)
+  }
+
+  "Stream.flatMap" should "convert all the elements in a Stream and flatten the results" in {
+    //when & then
+    Stream().flatMap(a => Stream(a, a)).toList shouldBe Nil
+    Stream(1, 2, 3).flatMap(_ => Stream()).toList shouldBe Nil
+    Stream(1, 2, 3).flatMap(a => Stream(a * 2, a * 2)).toList shouldBe List(2, 2, 4, 4, 6, 6)
+  }
 }
