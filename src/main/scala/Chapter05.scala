@@ -49,4 +49,12 @@ object Chapter05 {
     *
     * @see [[Stream.takeWhileUsingFoldRight]]
     */
+
+  /**
+    * Exercise 5.6
+    *
+    * Hard: Implement `headOption` using `foldRight`.
+    *
+    * @see [[Stream.headOptionUsingFoldRight]]
+    */
 }

@@ -66,7 +66,13 @@ sealed trait Stream[+A] {
   def takeWhileUsingFoldRight(p: A => Boolean): Stream[A] = {
     foldRight(Stream.empty[A]) { (a, b) =>
       if (p(a)) Stream.cons(a, b)
-      else b
+      else Stream.empty
+    }
+  }
+
+  def headOptionUsingFoldRight: Option[A] = {
+    foldRight(None: Option[A]) { (a, _) =>
+      Some(a)
     }
   }
 }

@@ -42,8 +42,8 @@ class Chapter05Spec extends FlatSpec
     Stream(1, 2, 3).takeWhile(_ => false).toList shouldBe Nil
     Stream(1, 2, 3).takeWhile(_ < 0).toList shouldBe Nil
     Stream(1, 2, 3).takeWhile(_ == 1).toList shouldBe List(1)
-    Stream(1, 1, 2, 3).takeWhile(_ == 1).toList shouldBe List(1, 1)
-    Stream(1, 2, 3).takeWhile(_ < 3).toList shouldBe List(1, 2)
+    Stream(1, 1, 2, 1, 3).takeWhile(_ == 1).toList shouldBe List(1, 1)
+    Stream(1, 2, 3, 1).takeWhile(_ < 3).toList shouldBe List(1, 2)
     Stream(1, 2, 3).takeWhile(_ < 5).toList shouldBe List(1, 2, 3)
   }
 
@@ -77,8 +77,36 @@ class Chapter05Spec extends FlatSpec
     Stream(1, 2, 3).takeWhileUsingFoldRight(_ => false).toList shouldBe Nil
     Stream(1, 2, 3).takeWhileUsingFoldRight(_ < 0).toList shouldBe Nil
     Stream(1, 2, 3).takeWhileUsingFoldRight(_ == 1).toList shouldBe List(1)
-    Stream(1, 1, 2, 3).takeWhileUsingFoldRight(_ == 1).toList shouldBe List(1, 1)
-    Stream(1, 2, 3).takeWhileUsingFoldRight(_ < 3).toList shouldBe List(1, 2)
+    Stream(1, 1, 2, 1, 3).takeWhileUsingFoldRight(_ == 1).toList shouldBe List(1, 1)
+    Stream(1, 2, 3, 1).takeWhileUsingFoldRight(_ < 3).toList shouldBe List(1, 2)
     Stream(1, 2, 3).takeWhileUsingFoldRight(_ < 5).toList shouldBe List(1, 2, 3)
+  }
+
+  it should "terminate the traversal as soon as it encounters a non-matching value" in {
+    //given
+    val tail = mockFunction[Stream[Int]]
+
+    //then
+    tail.expects().never()
+
+    //when
+    Stream.cons(1, Stream.cons(2, tail())).takeWhileUsingFoldRight(_ == 1).toList shouldBe List(1)
+  }
+
+  "headOptionUsingFoldRight" should "return first element of non-empty Stream or None for empty" in {
+    //when & then
+    Stream().headOptionUsingFoldRight shouldBe None
+    Stream(1, 2, 3).headOptionUsingFoldRight shouldBe Some(1)
+  }
+
+  it should "terminate the traversal as soon as it encounters the first value" in {
+    //given
+    val tail = mockFunction[Stream[Int]]
+
+    //then
+    tail.expects().never()
+
+    //when
+    Stream.cons(1, tail()).headOptionUsingFoldRight shouldBe Some(1)
   }
 }
