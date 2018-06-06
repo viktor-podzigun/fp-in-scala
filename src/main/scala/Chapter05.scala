@@ -41,4 +41,12 @@ object Chapter05 {
     *
     * @see [[Stream.forAll]]
     */
+
+  /**
+    * Exercise 5.5
+    *
+    * Use `foldRight` to implement `takeWhile`.
+    *
+    * @see [[Stream.takeWhileUsingFoldRight]]
+    */
 }

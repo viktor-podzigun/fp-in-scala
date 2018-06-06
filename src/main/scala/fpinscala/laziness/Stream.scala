@@ -57,6 +57,18 @@ sealed trait Stream[+A] {
 
     loop(this, res = true)
   }
+
+  def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {
+    case Cons(h, t) => f(h(), t().foldRight(z)(f))
+    case _ => z
+  }
+
+  def takeWhileUsingFoldRight(p: A => Boolean): Stream[A] = {
+    foldRight(Stream.empty[A]) { (a, b) =>
+      if (p(a)) Stream.cons(a, b)
+      else b
+    }
+  }
 }
 
 case object Empty extends Stream[Nothing]

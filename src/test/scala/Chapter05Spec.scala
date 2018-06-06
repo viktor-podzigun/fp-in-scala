@@ -69,4 +69,16 @@ class Chapter05Spec extends FlatSpec
     //when
     Stream.cons(1, Stream.cons(2, tail())).forAll(_ == 1) shouldBe false
   }
+
+  "takeWhileUsingFoldRight" should "return all starting elements that match given predicate" in {
+    //when & then
+    Stream().takeWhileUsingFoldRight(_ => false).toList shouldBe Nil
+    Stream().takeWhileUsingFoldRight(_ => true).toList shouldBe Nil
+    Stream(1, 2, 3).takeWhileUsingFoldRight(_ => false).toList shouldBe Nil
+    Stream(1, 2, 3).takeWhileUsingFoldRight(_ < 0).toList shouldBe Nil
+    Stream(1, 2, 3).takeWhileUsingFoldRight(_ == 1).toList shouldBe List(1)
+    Stream(1, 1, 2, 3).takeWhileUsingFoldRight(_ == 1).toList shouldBe List(1, 1)
+    Stream(1, 2, 3).takeWhileUsingFoldRight(_ < 3).toList shouldBe List(1, 2)
+    Stream(1, 2, 3).takeWhileUsingFoldRight(_ < 5).toList shouldBe List(1, 2, 3)
+  }
 }
