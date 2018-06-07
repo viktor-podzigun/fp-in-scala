@@ -162,4 +162,27 @@ class Chapter05Spec extends FlatSpec
     Stream.unfold(1)(_ => None).toList shouldBe Nil
     Stream.unfold(1)(s => Some((s, s + 1))).take(3).toList shouldBe List(1, 2, 3)
   }
+
+  "onesUsingUnfold" should "return an infinite Stream of 1s" in {
+    //when & then
+    Stream.onesUsingUnfold.take(5).toList shouldBe List(1, 1, 1, 1, 1)
+  }
+
+  "constantUsingUnfold" should "return an infinite Stream of a given value" in {
+    //when & then
+    Stream.constantUsingUnfold("1").take(5).toList shouldBe List("1", "1", "1", "1", "1")
+    Stream.constantUsingUnfold(2).take(100).toList.size shouldBe 100
+  }
+
+  "fromUsingUnfold" should "return an infinite Stream of integers, starting from n, then n+1, n+2, and so on" in {
+    //when & then
+    Stream.fromUsingUnfold(0).take(3).toList shouldBe List(0, 1, 2)
+    Stream.fromUsingUnfold(1).take(3).toList shouldBe List(1, 2, 3)
+    Stream.fromUsingUnfold(2).take(3).toList shouldBe List(2, 3, 4)
+  }
+
+  "fibsUsingUnfold" should "return an infinite Stream of Fibonacci numbers" in {
+    //when & then
+    Stream.fibsUsingUnfold().take(8).toList shouldBe List(0, 1, 1, 2, 3, 5, 8, 13)
+  }
 }

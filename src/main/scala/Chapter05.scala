@@ -105,4 +105,15 @@ object Chapter05 {
     *
     * @see [[Stream.unfold]]
     */
+
+  /**
+    * Exercise 5.12
+    *
+    * Write `fibs`, `from`, `constant`, and `ones` in terms of unfold.
+    *
+    * @see [[Stream.onesUsingUnfold]]
+    * @see [[Stream.constantUsingUnfold]]
+    * @see [[Stream.fromUsingUnfold]]
+    * @see [[Stream.fibsUsingUnfold]]
+    */
 }
