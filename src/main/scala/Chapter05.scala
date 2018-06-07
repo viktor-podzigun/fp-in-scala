@@ -96,4 +96,13 @@ object Chapter05 {
     *
     * @see [[Stream.fibs]]
     */
+
+  /**
+    * Exercise 5.11
+    *
+    * Write a more general stream-building function called `unfold`. It takes an initial `state`,
+    * and a function for producing both the next state and the next value in the generated stream.
+    *
+    * @see [[Stream.unfold]]
+    */
 }

@@ -156,4 +156,10 @@ class Chapter05Spec extends FlatSpec
     //when & then
     Stream.fibs().take(8).toList shouldBe List(0, 1, 1, 2, 3, 5, 8, 13)
   }
+
+  "Stream.unfold" should "provide general stream-building" in {
+    //when & then
+    Stream.unfold(1)(_ => None).toList shouldBe Nil
+    Stream.unfold(1)(s => Some((s, s + 1))).take(3).toList shouldBe List(1, 2, 3)
+  }
 }
