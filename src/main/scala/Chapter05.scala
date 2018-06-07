@@ -78,4 +78,13 @@ object Chapter05 {
     *
     * @see [[Stream.constant]]
     */
+
+  /**
+    * Exercise 5.9
+    *
+    * Write a function that generates an infinite stream of integers,
+    * starting from `n`, then `n + 1`, `n + 2`, and so on.
+    *
+    * @see [[Stream.from]]
+    */
 }

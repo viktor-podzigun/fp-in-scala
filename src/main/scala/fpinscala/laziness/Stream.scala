@@ -138,4 +138,9 @@ object Stream {
     lazy val res: Stream[A] = cons(a, res)
     res
   }
+
+  def from(n: Int): Stream[Int] = {
+    lazy val res: Stream[Int] = cons(n, res.map(_ + 1))
+    res
+  }
 }
