@@ -69,4 +69,13 @@ object Chapter05 {
     * @see [[Stream.append]]
     * @see [[Stream.flatMap]]
     */
+
+  /**
+    * Exercise 5.8
+    *
+    * Generalize `ones` slightly to the function `constant`, which returns an infinite `Stream`
+    * of a given value.
+    *
+    * @see [[Stream.constant]]
+    */
 }

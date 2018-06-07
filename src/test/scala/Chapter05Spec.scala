@@ -138,4 +138,10 @@ class Chapter05Spec extends FlatSpec
     Stream(1, 2, 3).flatMap(_ => Stream()).toList shouldBe Nil
     Stream(1, 2, 3).flatMap(a => Stream(a * 2, a * 2)).toList shouldBe List(2, 2, 4, 4, 6, 6)
   }
+
+  "Stream.constant" should "an infinite Stream of a given value" in {
+    //when & then
+    Stream.constant("1").take(5).toList shouldBe List("1", "1", "1", "1", "1")
+    Stream.constant(2).take(100).toList.size shouldBe 100
+  }
 }
