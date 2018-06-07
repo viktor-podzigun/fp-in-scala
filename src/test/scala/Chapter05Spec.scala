@@ -151,4 +151,9 @@ class Chapter05Spec extends FlatSpec
     Stream.from(1).take(3).toList shouldBe List(1, 2, 3)
     Stream.from(2).take(3).toList shouldBe List(2, 3, 4)
   }
+
+  "Stream.fibs" should "return an infinite Stream of Fibonacci numbers" in {
+    //when & then
+    Stream.fibs().take(8).toList shouldBe List(0, 1, 1, 2, 3, 5, 8, 13)
+  }
 }

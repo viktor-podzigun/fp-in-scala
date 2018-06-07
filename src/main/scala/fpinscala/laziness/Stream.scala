@@ -143,4 +143,12 @@ object Stream {
     lazy val res: Stream[Int] = cons(n, res.map(_ + 1))
     res
   }
+
+  def fibs(): Stream[Int] = {
+    def loop(n1: Int, n2: Int): Stream[Int] = {
+      cons(n1, loop(n2, n1 + n2))
+    }
+
+    loop(0, 1)
+  }
 }
