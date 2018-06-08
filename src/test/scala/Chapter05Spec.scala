@@ -251,4 +251,11 @@ class Chapter05Spec extends FlatSpec
     Stream(1, 2, 3).startsWith(Stream(1, 2, 3)) shouldBe true
     Stream(1, 2, 3).startsWith(Stream(2, 3, 1)) shouldBe false
   }
+
+  "Stream.tails" should "return the Stream of suffixes of the input sequence, starting with the original Stream" in {
+    //when & then
+    Stream().tails.toList.map(_.toList) shouldBe List(List())
+    Stream(1).tails.toList.map(_.toList) shouldBe List(List(1), List())
+    Stream(1, 2, 3).tails.toList.map(_.toList) shouldBe List(List(1, 2, 3), List(2, 3), List(3), List())
+  }
 }
