@@ -100,6 +100,37 @@ sealed trait Stream[+A] {
       f(a).append(b)
     }
   }
+
+  def mapUsingUnfold[B](f: A => B): Stream[B] = Stream.unfold(this) {
+    case Empty => None
+    case Cons(h, t) => Some((f(h()), t()))
+  }
+
+  def takeUsingUnfold(n: Int): Stream[A] = Stream.unfold((this, n)) {
+    case (Cons(h, t), i) if i > 0 => Some((h(), (t(), i - 1)))
+    case _ => None
+  }
+
+  def takeWhileUsingUnfold(p: A => Boolean): Stream[A] = Stream.unfold(this) {
+    case Cons(h, t) if p(h()) => Some((h(), t()))
+    case _ => None
+  }
+
+  def zipWithUsingUnfold[AA >: A, B](s2: Stream[AA])(f: (AA, AA) => B): Stream[B] = {
+    Stream.unfold((this, s2)) {
+      case (Cons(h1, t1), Cons(h2, t2)) => Some((f(h1(), h2()), (t1(), t2())))
+      case _ => None
+    }
+  }
+
+  def zipAll[B](s2: Stream[B]): Stream[(Option[A], Option[B])] = {
+    Stream.unfold((this, s2)) {
+      case (Cons(h1, t1), Cons(h2, t2)) => Some(((Some(h1()), Some(h2())), (t1(), t2())))
+      case (Cons(h1, t1), Empty) => Some(((Some(h1()), None), (t1(), Empty)))
+      case (Empty, Cons(h2, t2)) => Some(((None, Some(h2())), (Empty, t2())))
+      case _ => None
+    }
+  }
 }
 
 case object Empty extends Stream[Nothing]
@@ -167,6 +198,7 @@ object Stream {
 
   def fromUsingUnfold(n: Int): Stream[Int] = unfold(n)(s => Some((s, s + 1)))
 
-  def fibsUsingUnfold(): Stream[Int] = unfold((0, 1)) { case (n1, n2) => Some((n1, (n2, n1 + n2)))
+  def fibsUsingUnfold(): Stream[Int] = {
+    unfold((0, 1)) { case (n1, n2) => Some((n1, (n2, n1 + n2))) }
   }
 }

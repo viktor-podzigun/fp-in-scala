@@ -116,4 +116,18 @@ object Chapter05 {
     * @see [[Stream.fromUsingUnfold]]
     * @see [[Stream.fibsUsingUnfold]]
     */
+
+  /**
+    * Exercise 5.13
+    *
+    * Use `unfold` to implement `map`, `take`, `takeWhile`, `zipWith` (as in chapter 3), and `zipAll`.
+    * The `zipAll` function should continue the traversal as long as either stream has more elements —
+    * it uses `Option` to indicate whether each stream has been exhausted.
+    *
+    * @see [[Stream.mapUsingUnfold]]
+    * @see [[Stream.takeUsingUnfold]]
+    * @see [[Stream.takeWhileUsingUnfold]]
+    * @see [[Stream.zipWithUsingUnfold]]
+    * @see [[Stream.zipAll]]
+    */
 }

@@ -185,4 +185,56 @@ class Chapter05Spec extends FlatSpec
     //when & then
     Stream.fibsUsingUnfold().take(8).toList shouldBe List(0, 1, 1, 2, 3, 5, 8, 13)
   }
+
+  "mapUsingUnfold" should "convert all the elements in a Stream according to the given function" in {
+    //when & then
+    Stream().mapUsingUnfold(identity).toList shouldBe Nil
+    Stream(1, 2, 3).mapUsingUnfold(_ * 2).toList shouldBe List(2, 4, 6)
+  }
+
+  "takeUsingUnfold" should "return the first n elements of a Stream" in {
+    //when & then
+    Stream().takeUsingUnfold(2).toList shouldBe Nil
+    Stream(1, 2, 3).takeUsingUnfold(-1).toList shouldBe Nil
+    Stream(1, 2, 3).takeUsingUnfold(0).toList shouldBe Nil
+    Stream(1, 2, 3).takeUsingUnfold(1).toList shouldBe List(1)
+    Stream(1, 2, 3).takeUsingUnfold(2).toList shouldBe List(1, 2)
+    Stream(1, 2, 3).takeUsingUnfold(3).toList shouldBe List(1, 2, 3)
+    Stream(1, 2, 3).takeUsingUnfold(4).toList shouldBe List(1, 2, 3)
+  }
+
+  "takeWhileUsingUnfold" should "return all starting elements that match given predicate" in {
+    //when & then
+    Stream().takeWhileUsingUnfold(_ => false).toList shouldBe Nil
+    Stream().takeWhileUsingUnfold(_ => true).toList shouldBe Nil
+    Stream(1, 2, 3).takeWhileUsingUnfold(_ => false).toList shouldBe Nil
+    Stream(1, 2, 3).takeWhileUsingUnfold(_ < 0).toList shouldBe Nil
+    Stream(1, 2, 3).takeWhileUsingUnfold(_ == 1).toList shouldBe List(1)
+    Stream(1, 1, 2, 1, 3).takeWhileUsingUnfold(_ == 1).toList shouldBe List(1, 1)
+    Stream(1, 2, 3, 1).takeWhileUsingUnfold(_ < 3).toList shouldBe List(1, 2)
+    Stream(1, 2, 3).takeWhileUsingUnfold(_ < 5).toList shouldBe List(1, 2, 3)
+  }
+
+  "zipWithUsingUnfold" should "return new Stream by merging paired elements of current and the given Streams" in {
+    //when & then
+    Stream[Int]().zipWithUsingUnfold(Stream())(_ + _).toList shouldBe List()
+    Stream(1).zipWithUsingUnfold(Stream(1))(_ + _).toList shouldBe List(2)
+    Stream(1).zipWithUsingUnfold(Stream(1))(_ - _).toList shouldBe List(0)
+    Stream(1).zipWithUsingUnfold(Stream(1, 3))(_ + _).toList shouldBe List(2)
+    Stream(1, 3).zipWithUsingUnfold(Stream(1))(_ - _).toList shouldBe List(0)
+    Stream(1, 2, 3).zipWithUsingUnfold(Stream())(_ + _).toList shouldBe List()
+    Stream(1.0, 2.0, 3.0).zipWithUsingUnfold(Stream(4.0, 5.0, 6.0))(_ + _).toList shouldBe List(5.0, 7.0, 9.0)
+  }
+
+  "zipAll" should "return new Stream by merging all elements of current and the given Streams" in {
+    //when & then
+    Stream[Int]().zipAll(Stream()).toList shouldBe List()
+    Stream(1).zipAll(Stream(2)).toList shouldBe List(Some(1) -> Some(2))
+    Stream(1).zipAll(Stream(1, 2)).toList shouldBe List(Some(1) -> Some(1), None -> Some(2))
+    Stream(1, 2).zipAll(Stream(3)).toList shouldBe List(Some(1) -> Some(3), Some(2) -> None)
+    Stream(1, 2, 3).zipAll(Stream()).toList shouldBe List(Some(1) -> None, Some(2) -> None, Some(3) -> None)
+    Stream(1.0, 2.0, 3.0).zipAll(Stream(4.0, 5.0, 6.0)).toList shouldBe {
+      List(Some(1.0) -> Some(4.0), Some(2.0) -> Some(5.0), Some(3.0) -> Some(6.0))
+    }
+  }
 }
