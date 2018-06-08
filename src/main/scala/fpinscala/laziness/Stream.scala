@@ -131,6 +131,15 @@ sealed trait Stream[+A] {
       case _ => None
     }
   }
+
+  def startsWith[AA >: A](s: Stream[AA]): Boolean = {
+    zipAll(s).takeWhile {
+      case (_, Some(_)) => true
+      case _ => false
+    }.forAll {
+      case (a, b) => a == b
+    }
+  }
 }
 
 case object Empty extends Stream[Nothing]

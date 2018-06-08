@@ -237,4 +237,18 @@ class Chapter05Spec extends FlatSpec
       List(Some(1.0) -> Some(4.0), Some(2.0) -> Some(5.0), Some(3.0) -> Some(6.0))
     }
   }
+
+  "Stream.startsWith" should "check if one Stream is a prefix of another" in {
+    //when & then
+    Stream().startsWith(Stream()) shouldBe true
+    Stream(1).startsWith(Stream()) shouldBe true
+    Stream(1).startsWith(Stream(1)) shouldBe true
+    Stream(1).startsWith(Stream(1, 2)) shouldBe false
+    Stream(1).startsWith(Stream(2)) shouldBe false
+    Stream(1, 2, 3).startsWith(Stream()) shouldBe true
+    Stream(1, 2, 3).startsWith(Stream(1)) shouldBe true
+    Stream(1, 2, 3).startsWith(Stream(1, 2)) shouldBe true
+    Stream(1, 2, 3).startsWith(Stream(1, 2, 3)) shouldBe true
+    Stream(1, 2, 3).startsWith(Stream(2, 3, 1)) shouldBe false
+  }
 }
