@@ -258,4 +258,14 @@ class Chapter05Spec extends FlatSpec
     Stream(1).tails.toList.map(_.toList) shouldBe List(List(1), List())
     Stream(1, 2, 3).tails.toList.map(_.toList) shouldBe List(List(1, 2, 3), List(2, 3), List(3), List())
   }
+
+  "Stream.scanRight" should "return a Stream of the intermediate results" in {
+    //when & then
+    Stream[Int]().scanRight(0)(_ + _).toList shouldBe List(0)
+    Stream[Int]().scanRight(1)(_ + _).toList shouldBe List(1)
+    Stream(1).scanRight(0)(_ + _).toList shouldBe List(1, 0)
+    Stream(1).scanRight(1)(_ + _).toList shouldBe List(2, 1)
+    Stream(1, 2).scanRight(2)(_ + _).toList shouldBe List(5, 4, 2)
+    Stream(1, 2, 3).scanRight(0)(_ + _).toList shouldBe List(6, 5, 3, 0)
+  }
 }

@@ -150,4 +150,13 @@ object Chapter05 {
     *
     * @see [[Stream.tails]]
     */
+
+  /**
+    * Exercise 5.16
+    *
+    * Hard: Generalize `tails` to the function `scanRight`, which is like a `foldRight`
+    * that returns a stream of the intermediate results.
+    *
+    * @see [[Stream.scanRight]]
+    */
 }
