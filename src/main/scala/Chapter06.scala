@@ -1,4 +1,5 @@
 import fpinscala.purestate.RNG
+import fpinscala.purestate.RNG._
 
 import scala.annotation.tailrec
 
@@ -75,5 +76,17 @@ object Chapter06 {
     }
 
     loop(count, rng, Nil)
+  }
+
+  /**
+    * Exercise 6.5
+    *
+    * Use `map` to reimplement `double` in a more elegant way. See exercise 6.2.
+    */
+  def doubleUsingMap: Rand[Double] = {
+    map(nonNegativeInt) { i =>
+      if (i == Int.MaxValue) 0.0
+      else i.toDouble/Int.MaxValue
+    }
   }
 }

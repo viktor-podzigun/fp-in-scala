@@ -131,4 +131,30 @@ class Chapter06Spec extends FlatSpec
     result shouldBe Nil
     next shouldBe rng
   }
+
+  "doubleUsingMap" should "return random Double between 0 and 1, not including 1" in {
+    //given
+    val rng = SimpleRNG(42)
+
+    //when
+    val (result, next) = doubleUsingMap(rng)
+
+    //then
+    next should not be rng
+    result should be >= 0.0
+    result should be < 1.0
+    result shouldBe doubleUsingMap(rng)._1
+  }
+
+  it should "return 0.0 when nextInt returns Int.MaxValue" in {
+    //given
+    val rng = mock[RNG]
+    (rng.nextInt _).expects().returns((Int.MaxValue, rng))
+
+    //when
+    val (result, _) = doubleUsingMap(rng)
+
+    //then
+    result shouldBe 0.0
+  }
 }
