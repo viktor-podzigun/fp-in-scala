@@ -30,4 +30,30 @@ object Chapter06 {
     if (i == Int.MaxValue) (0.0, next)
     else (i.toDouble/Int.MaxValue, next)
   }
+
+  /**
+    * Exercise 6.3
+    *
+    * Write functions to generate an `(Int, Double)` pair,
+    * a `(Double, Int)` pair, and a `(Double, Double, Double)` 3-tuple.
+    * You should be able to reuse the functions you've already written.
+    */
+  def intDouble(rng: RNG): ((Int, Double), RNG) = {
+    val (i, next) = nonNegativeInt(rng)
+    val (d, _) = double(rng)
+    ((i, d), next)
+  }
+
+  def doubleInt(rng: RNG): ((Double, Int), RNG) = {
+    val (d, next) = double(rng)
+    val (i, _) = nonNegativeInt(rng)
+    ((d, i), next)
+  }
+
+  def double3(rng: RNG): ((Double, Double, Double), RNG) = {
+    val (d1, next1) = double(rng)
+    val (d2, next2) = double(next1)
+    val (d3, next3) = double(next2)
+    ((d1, d2, d3), next3)
+  }
 }

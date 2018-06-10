@@ -55,4 +55,46 @@ class Chapter06Spec extends FlatSpec
     //then
     result shouldBe 0.0
   }
+
+  "intDouble" should "return random (Int, Double)" in {
+    //given
+    val rng = SimpleRNG(42)
+
+    //when
+    val ((res1, res2), _) = intDouble(rng)
+
+    //then
+    res1 should be >= 0
+    res2 should be >= 0.0
+    res2 should be < 1.0
+  }
+
+  "doubleInt" should "return random (Double, Int)" in {
+    //given
+    val rng = SimpleRNG(42)
+
+    //when
+    val ((res1, res2), _) = doubleInt(rng)
+
+    //then
+    res1 should be >= 0.0
+    res1 should be < 1.0
+    res2 should be >= 0
+  }
+
+  "double3" should "return random (Double, Double, Double)" in {
+    //given
+    val rng = SimpleRNG(42)
+
+    //when
+    val ((res1, res2, res3), _) = double3(rng)
+
+    //then
+    res1 should be >= 0.0
+    res1 should be < 1.0
+    res2 should be >= 0.0
+    res2 should be < 1.0
+    res3 should be >= 0.0
+    res3 should be < 1.0
+  }
 }
