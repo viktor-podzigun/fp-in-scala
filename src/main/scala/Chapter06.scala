@@ -1,5 +1,7 @@
 import fpinscala.purestate.RNG
 
+import scala.annotation.tailrec
+
 object Chapter06 {
 
   /**
@@ -55,5 +57,23 @@ object Chapter06 {
     val (d2, next2) = double(next1)
     val (d3, next3) = double(next2)
     ((d1, d2, d3), next3)
+  }
+
+  /**
+    * Exercise 6.4
+    *
+    * Write a function to generate a list of random integers.
+    */
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
+    @tailrec
+    def loop(n: Int, rng: RNG, res: List[Int]): (List[Int], RNG) = {
+      if (n <= 0) (res, rng)
+      else {
+        val (i, next) = nonNegativeInt(rng)
+        loop(n - 1, next, i :: res)
+      }
+    }
+
+    loop(count, rng, Nil)
   }
 }

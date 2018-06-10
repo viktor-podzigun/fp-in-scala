@@ -12,9 +12,10 @@ class Chapter06Spec extends FlatSpec
     val rng = SimpleRNG(42)
 
     //when
-    val (result, _) = nonNegativeInt(rng)
+    val (result, next) = nonNegativeInt(rng)
 
     //then
+    next should not be rng
     result should be >= 0
     result shouldBe nonNegativeInt(rng)._1
   }
@@ -36,9 +37,10 @@ class Chapter06Spec extends FlatSpec
     val rng = SimpleRNG(42)
 
     //when
-    val (result, _) = double(rng)
+    val (result, next) = double(rng)
 
     //then
+    next should not be rng
     result should be >= 0.0
     result should be < 1.0
     result shouldBe double(rng)._1
@@ -61,9 +63,10 @@ class Chapter06Spec extends FlatSpec
     val rng = SimpleRNG(42)
 
     //when
-    val ((res1, res2), _) = intDouble(rng)
+    val ((res1, res2), next) = intDouble(rng)
 
     //then
+    next should not be rng
     res1 should be >= 0
     res2 should be >= 0.0
     res2 should be < 1.0
@@ -74,9 +77,10 @@ class Chapter06Spec extends FlatSpec
     val rng = SimpleRNG(42)
 
     //when
-    val ((res1, res2), _) = doubleInt(rng)
+    val ((res1, res2), next) = doubleInt(rng)
 
     //then
+    next should not be rng
     res1 should be >= 0.0
     res1 should be < 1.0
     res2 should be >= 0
@@ -87,14 +91,44 @@ class Chapter06Spec extends FlatSpec
     val rng = SimpleRNG(42)
 
     //when
-    val ((res1, res2, res3), _) = double3(rng)
+    val ((res1, res2, res3), next) = double3(rng)
 
     //then
+    next should not be rng
     res1 should be >= 0.0
     res1 should be < 1.0
     res2 should be >= 0.0
     res2 should be < 1.0
     res3 should be >= 0.0
     res3 should be < 1.0
+  }
+
+  "ints" should "return a list of random integers" in {
+    //given
+    val rng = SimpleRNG(42)
+
+    //when
+    val (result, next) = ints(5)(rng)
+
+    //then
+    result.size shouldBe 5
+    result.foldLeft(-1) { case (prev, r) =>
+      r should be >= 0
+      r should not be prev
+      r
+    }
+    next should not be rng
+  }
+
+  it should "return an empty list if n = 0" in {
+    //given
+    val rng = SimpleRNG(42)
+
+    //when
+    val (result, next) = ints(0)(rng)
+
+    //then
+    result shouldBe Nil
+    next shouldBe rng
   }
 }
