@@ -16,4 +16,18 @@ object Chapter06 {
     else if (i < 0) (-i, next)
     else res
   }
+
+  /**
+    * Exercise 6.2
+    *
+    * Write a function to generate a `Double` between `0` and `1`, not including 1.
+    * Note: You can use `Int.MaxValue` to obtain the maximum positive integer value,
+    * and you can use `x.toDouble` to convert an `x: Int` to a `Double`.
+    */
+  def double(rng: RNG): (Double, RNG) = {
+    val (i, next) = nonNegativeInt(rng)
+
+    if (i == Int.MaxValue) (0.0, next)
+    else (i.toDouble/Int.MaxValue, next)
+  }
 }

@@ -30,4 +30,29 @@ class Chapter06Spec extends FlatSpec
     //then
     result shouldBe 0
   }
+
+  "double" should "return random Double between 0 and 1, not including 1" in {
+    //given
+    val rng = SimpleRNG(42)
+
+    //when
+    val (result, _) = double(rng)
+
+    //then
+    result should be >= 0.0
+    result should be < 1.0
+    result shouldBe double(rng)._1
+  }
+
+  it should "return 0.0 when nextInt returns Int.MaxValue" in {
+    //given
+    val rng = mock[RNG]
+    (rng.nextInt _).expects().returns((Int.MaxValue, rng))
+
+    //when
+    val (result, _) = double(rng)
+
+    //then
+    result shouldBe 0.0
+  }
 }
