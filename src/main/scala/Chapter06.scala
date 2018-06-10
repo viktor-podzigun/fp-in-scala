@@ -42,15 +42,15 @@ object Chapter06 {
     * You should be able to reuse the functions you've already written.
     */
   def intDouble(rng: RNG): ((Int, Double), RNG) = {
-    val (i, next) = nonNegativeInt(rng)
-    val (d, _) = double(rng)
-    ((i, d), next)
+    val (i, rng2) = nonNegativeInt(rng)
+    val (d, rng3) = double(rng2)
+    ((i, d), rng3)
   }
 
   def doubleInt(rng: RNG): ((Double, Int), RNG) = {
-    val (d, next) = double(rng)
-    val (i, _) = nonNegativeInt(rng)
-    ((d, i), next)
+    val (d, rng2) = double(rng)
+    val (i, rng3) = nonNegativeInt(rng2)
+    ((d, i), rng3)
   }
 
   def double3(rng: RNG): ((Double, Double, Double), RNG) = {
@@ -88,5 +88,18 @@ object Chapter06 {
       if (i == Int.MaxValue) 0.0
       else i.toDouble/Int.MaxValue
     }
+  }
+
+  /**
+    * Exercise 6.6
+    *
+    * Write the implementation of `map2` based on the following signature.
+    * This function takes two actions, `ra` and `rb`, and a function `f`
+    * for combining their results, and returns a new action that combines them:
+    */
+  def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = { rng =>
+    val (a, rng2) = ra(rng)
+    val (b, rng3) = rb(rng2)
+    (f(a, b), rng3)
   }
 }

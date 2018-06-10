@@ -1,4 +1,5 @@
 import Chapter06._
+import fpinscala.purestate.RNG.Rand
 import fpinscala.purestate._
 import org.scalamock.scalatest.MockFactory
 import org.scalatest._
@@ -156,5 +157,21 @@ class Chapter06Spec extends FlatSpec
 
     //then
     result shouldBe 0.0
+  }
+
+  "map2" should "return an action that combines the results of two other actions" in {
+    //given
+    val rng = SimpleRNG(42)
+    val ra: Rand[Int] = nonNegativeInt
+    val rb: Rand[Double] = double
+
+    //when
+    val ((res1, res2), next) = map2(ra, rb)((_, _))(rng)
+
+    //then
+    next should not be rng
+    res1 should be >= 0
+    res2 should be >= 0.0
+    res2 should be < 1.0
   }
 }
