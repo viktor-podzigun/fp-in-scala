@@ -174,4 +174,52 @@ class Chapter06Spec extends FlatSpec
     res2 should be >= 0.0
     res2 should be < 1.0
   }
+
+  "sequence" should "combine a List of transitions into a single transition" in {
+    //given
+    val rng = SimpleRNG(42)
+    val d: Rand[Double] = double
+
+    //when
+    val (result, next) = sequence(List.fill(3)(d))(rng)
+
+    //then
+    result.size shouldBe 3
+    result.foldLeft(-1.0) { case (prev, r) =>
+      r should be >= 0.0
+      r should be < 1.0
+      r should not be prev
+      r
+    }
+    next should not be rng
+  }
+
+  "intsUsingSequence" should "return a list of random integers" in {
+    //given
+    val rng = SimpleRNG(42)
+
+    //when
+    val (result, next) = intsUsingSequence(5)(rng)
+
+    //then
+    result.size shouldBe 5
+    result.foldLeft(-1) { case (prev, r) =>
+      r should be >= 0
+      r should not be prev
+      r
+    }
+    next should not be rng
+  }
+
+  it should "return an empty list if n = 0" in {
+    //given
+    val rng = SimpleRNG(42)
+
+    //when
+    val (result, next) = intsUsingSequence(0)(rng)
+
+    //then
+    result shouldBe Nil
+    next shouldBe rng
+  }
 }
