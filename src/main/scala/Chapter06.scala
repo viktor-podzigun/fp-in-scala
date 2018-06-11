@@ -1,5 +1,6 @@
 import fpinscala.purestate.RNG
 import fpinscala.purestate.RNG._
+import fpinscala.purestate.State
 
 import scala.annotation.tailrec
 
@@ -162,4 +163,18 @@ object Chapter06 {
       rng => (f(a, b), rng)
     }
   }
+
+  /**
+    * Exercise 6.10
+    *
+    * Generalize the functions `unit`, `map`, `map2`, `flatMap`, and `sequence`.
+    * Add them as methods on the `State` case class where possible.
+    * Otherwise you should put them in a `State` companion object.
+    *
+    * @see [[State.unit]]
+    * @see [[State.map]]
+    * @see [[State.map2]]
+    * @see [[State.flatMap]]
+    * @see [[State.sequence]]
+    */
 }

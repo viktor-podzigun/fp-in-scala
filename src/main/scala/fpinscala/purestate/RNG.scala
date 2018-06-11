@@ -6,7 +6,8 @@ trait RNG {
 }
 
 object RNG {
-  type Rand[+A] = RNG => (A, RNG)
+  type Rand[A] = State.State[RNG, A]
+  //type Rand[+A] = RNG => (A, RNG)
 
   val int: Rand[Int] = _.nextInt
 

@@ -277,4 +277,77 @@ class Chapter06Spec extends FlatSpec
     res2 should be >= 0.0
     res2 should be < 1.0
   }
+
+  "State.unit" should "pass the state through without using it" in {
+    //given
+    val rng = SimpleRNG(42)
+
+    //when
+    val (result, next) = State.unit(5)(rng)
+
+    //then
+    next shouldBe rng
+    result shouldBe 5
+  }
+
+  "State.map" should "transform the output of a state action without modifying the state itself" in {
+    //given
+    val rng = SimpleRNG(42)
+    val state = State(nonNegativeInt)
+
+    //when
+    val (result, next) = state.map(- _)(rng)
+
+    //then
+    next should not be rng
+    result should be <= 0
+  }
+
+  "State.map2" should "return an action that combines the results of two other actions" in {
+    //given
+    val rng = SimpleRNG(42)
+    val state = State(nonNegativeInt)
+    val rb: Rand[Double] = double
+
+    //when
+    val ((res1, res2), next) = state.map2(rb)((_, _))(rng)
+
+    //then
+    next should not be rng
+    res1 should be >= 0
+    res2 should be >= 0.0
+    res2 should be < 1.0
+  }
+
+  "State.flatMap" should "generate a random A with Rand[A] and choose a Rand[B] based on its value" in {
+    //given
+    val rng = SimpleRNG(42)
+    val state = State(double)
+
+    //when
+    val (result, next) = state.flatMap(_ => nonNegativeInt)(rng)
+
+    //then
+    next should not be rng
+    result should be >= 0
+  }
+
+  "State.sequence" should "combine a List of transitions into a single transition" in {
+    //given
+    val rng = SimpleRNG(42)
+    val d: Rand[Double] = double
+
+    //when
+    val (result, next) = State.sequence(List.fill(3)(d))(rng)
+
+    //then
+    result.size shouldBe 3
+    result.foldLeft(-1.0) { case (prev, r) =>
+      r should be >= 0.0
+      r should be < 1.0
+      r should not be prev
+      r
+    }
+    next should not be rng
+  }
 }
