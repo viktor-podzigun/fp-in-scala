@@ -222,4 +222,31 @@ class Chapter06Spec extends FlatSpec
     result shouldBe Nil
     next shouldBe rng
   }
+
+  "flatMap" should "generate a random A with Rand[A] and choose a Rand[B] based on its value" in {
+    //given
+    val rng = SimpleRNG(42)
+    val d: Rand[Double] = double
+
+    //when
+    val (result, next) = flatMap(d)(_ => nonNegativeInt)(rng)
+
+    //then
+    next should not be rng
+    result should be >= 0
+  }
+
+  "nonNegativeLessThan" should "generate an integer between 0 (inclusive) and n (exclusive)" in {
+    //given
+    val rng = SimpleRNG(42)
+    val n = 123
+
+    //when
+    val (result, next) = nonNegativeLessThan(n)(rng)
+
+    //then
+    next should not be rng
+    result should be >= 0
+    result should be < n
+  }
 }
