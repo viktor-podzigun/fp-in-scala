@@ -145,4 +145,21 @@ object Chapter06 {
     }
     else nonNegativeLessThan(n)
   }
+
+  /**
+    * Exercise 6.9
+    *
+    * Reimplement `map` and `map2` in terms of `flatMap`.
+    * The fact that this is possible is what we're referring to
+    * when we say that `flatMap` is more powerful than `map` and `map2`.
+    */
+  def mapUsingFlatMap[A, B](s: Rand[A])(f: A => B): Rand[B] = flatMap(s) { a =>
+    rng => (f(a), rng)
+  }
+
+  def map2UsingFlatMap[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = flatMap(ra) { a =>
+    flatMap(rb) { b =>
+      rng => (f(a, b), rng)
+    }
+  }
 }

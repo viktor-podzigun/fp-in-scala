@@ -249,4 +249,32 @@ class Chapter06Spec extends FlatSpec
     result should be >= 0
     result should be < n
   }
+
+  "mapUsingFlatMap" should "transform the output of a state action without modifying the state itself" in {
+    //given
+    val rng = SimpleRNG(42)
+
+    //when
+    val (result, next) = mapUsingFlatMap(nonNegativeInt)(- _)(rng)
+
+    //then
+    next should not be rng
+    result should be <= 0
+  }
+
+  "map2UsingFlatMap" should "return an action that combines the results of two other actions" in {
+    //given
+    val rng = SimpleRNG(42)
+    val ra: Rand[Int] = nonNegativeInt
+    val rb: Rand[Double] = double
+
+    //when
+    val ((res1, res2), next) = map2UsingFlatMap(ra, rb)((_, _))(rng)
+
+    //then
+    next should not be rng
+    res1 should be >= 0
+    res2 should be >= 0.0
+    res2 should be < 1.0
+  }
 }
