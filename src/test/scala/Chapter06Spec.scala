@@ -307,7 +307,7 @@ class Chapter06Spec extends FlatSpec
     //given
     val rng = SimpleRNG(42)
     val state = State(nonNegativeInt)
-    val rb: Rand[Double] = double
+    val rb = State(double)
 
     //when
     val ((res1, res2), next) = state.map2(rb)((_, _))(rng)
@@ -325,7 +325,7 @@ class Chapter06Spec extends FlatSpec
     val state = State(double)
 
     //when
-    val (result, next) = state.flatMap(_ => nonNegativeInt)(rng)
+    val (result, next) = state.flatMap(_ => State(nonNegativeInt))(rng)
 
     //then
     next should not be rng
@@ -335,7 +335,7 @@ class Chapter06Spec extends FlatSpec
   "State.sequence" should "combine a List of transitions into a single transition" in {
     //given
     val rng = SimpleRNG(42)
-    val d: Rand[Double] = double
+    val d = State(double)
 
     //when
     val (result, next) = State.sequence(List.fill(3)(d))(rng)
@@ -349,5 +349,54 @@ class Chapter06Spec extends FlatSpec
       r
     }
     next should not be rng
+  }
+
+  "modify" should "modify the state" in {
+    //when
+    val result = State.modify[String](_ + "b")
+
+    //then
+    val (_, next) = result("a")
+    next shouldBe "ab"
+
+    val (s, _) = State.get("c")
+    s shouldBe "c"
+  }
+
+  "simulateMachine" should "operate machine based on inputs and return coins and candies left" in {
+    //given
+    val machine: Machine = Machine(locked = true, coins = 10, candies = 5)
+    val inputs = List(
+      Coin, Turn,
+      Coin, Turn,
+      Coin, Turn,
+      Coin, Turn
+    )
+
+    //when
+    val ((coins, candies), next) = simulateMachine(inputs)(machine)
+
+    //then
+    coins shouldBe 14
+    candies shouldBe 1
+
+    next.locked shouldBe true
+    next.coins shouldBe coins
+    next.candies shouldBe candies
+    next should not be machine
+  }
+
+  it should "return original state when list of inputs is empty" in {
+    //given
+    val machine: Machine = Machine(locked = true, coins = 10, candies = 5)
+    val inputs: List[Input] = Nil
+
+    //when
+    val ((coins, candies), next) = simulateMachine(inputs)(machine)
+
+    //then
+    coins shouldBe machine.coins
+    candies shouldBe machine.candies
+    next shouldBe machine
   }
 }

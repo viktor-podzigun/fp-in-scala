@@ -1,6 +1,5 @@
-import fpinscala.purestate.RNG
 import fpinscala.purestate.RNG._
-import fpinscala.purestate.State
+import fpinscala.purestate.{RNG, State}
 
 import scala.annotation.tailrec
 
@@ -177,4 +176,51 @@ object Chapter06 {
     * @see [[State.flatMap]]
     * @see [[State.sequence]]
     */
+
+  /**
+    * Exercise 6.11
+    *
+    * Hard: To gain experience with the use of `State`, implement a finite state automaton
+    * that models a simple candy dispenser. The machine has two types of input:
+    * you can insert a coin, or you can turn the knob to dispense candy.
+    * It can be in one of two states: locked or unlocked.
+    * It also tracks how many candies are left and how many coins it contains.
+    *
+    * The method `simulateMachine` should operate the machine based on the list of `inputs`
+    * and return the number of coins and candies left in the machine at the end.
+    * For example, if the input `Machine` has `10` coins and `5` candies,
+    * and a total of `4` candies are successfully bought, the output should be `(14, 1)`.
+    */
+  sealed trait Input
+  case object Coin extends Input
+  case object Turn extends Input
+
+  case class Machine(locked: Boolean, candies: Int, coins: Int)
+
+  def simulateMachine(inputs: List[Input]): State[Machine, (Int, Int)] = {
+
+    def operate(input: Input): State[Machine, (Int, Int)] = State { m =>
+      val next = input match {
+        case Coin if m.locked && m.candies > 0 => m.copy(
+          locked = false,
+          coins = m.coins + 1
+        )
+        case Turn if !m.locked && m.candies > 0 => m.copy(
+          locked = true,
+          candies = m.candies - 1
+        )
+        case _ => m
+      }
+
+      ((next.coins, next.candies), next)
+    }
+
+    for {
+      list <- State.sequence(inputs.map(operate))
+      m <- State.get
+    } yield {
+      if (list.isEmpty) (m.coins, m.candies)
+      else list.last
+    }
+  }
 }
