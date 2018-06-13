@@ -1,3 +1,4 @@
+import fpinscala.parallelism.Par._
 import fpinscala.parallelism._
 
 object Chapter07 {
@@ -25,8 +26,14 @@ object Chapter07 {
     *
     * Before continuing, try to come up with representations for `Par`
     * that make it possible to implement the functions of our API.
+    */
+
+  /**
+    * Exercise 7.3
     *
-    * @see [[ParUnit]]
-    * @see [[ParFork]]
+    * Hard: Fix the implementation of `map2` so that it respects
+    * the contract of timeouts on `Future`.
+    *
+    * @see [[Par.Map2Future]]
     */
 }
