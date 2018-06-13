@@ -5,34 +5,37 @@ package fpinscala.parallelism
   *
   * @tparam A a type of computed value
   */
-trait Par[+A]
+sealed trait Par[+A]
+
+case class ParUnit[+A](value: A) extends Par[A]
+
+case class ParFork[+A](value: () => Par[A]) extends Par[A]
 
 object Par {
 
   /**
-    * Takes an unevaluated A and returns a computation that might evaluate it
-    * in a separate thread.
-    *
-    * We call it `unit` because in a sense it creates a unit of parallelism
-    * that just wraps a single value.
-    *
-    * @param a an unevaluated value
-    * @tparam A the type of the value
-    * @return a parallel computation that evaluates the value
+    * Creates a computation that immediately results in the value a.
     */
-  def unit[A](a: => A): Par[A] = ???
+  def unit[A](a: A): Par[A] = ParUnit(a)
 
   /**
-    * Extracts the resulting value from a parallel computation.
-    *
-    * @param a
-    * @tparam A
-    * @return
-    */
-  def get[A](a: Par[A]): A = ???
-
-  /**
-    * Combines the result of two parallel computations.
+    * Combines the results of two parallel computations with a binary function.
     */
   def map2[A, B, C](a: Par[A], b: Par[B])(f: (A, B) => C): Par[C] = ???
+
+  /**
+    * Wraps the expression a for concurrent evaluation by `run`.
+    */
+  def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
+
+  /**
+    * Marks a computation for concurrent evaluation by `run`.
+    */
+  def fork[A](a: => Par[A]): Par[A] = ParFork(() => a)
+
+  /**
+    * Fully evaluates a given Par, spawning parallel computations
+    * as requested by `fork` and extracting the resulting value.
+    */
+  def run[A](a: Par[A]): A = ???
 }

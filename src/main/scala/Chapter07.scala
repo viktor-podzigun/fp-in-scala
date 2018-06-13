@@ -19,4 +19,14 @@ object Chapter07 {
       val (l, r) = ints.splitAt(ints.length / 2)
       Par.map2(sum(l), sum(r))(_ + _)
     }
+
+  /**
+    * Exercise 7.2
+    *
+    * Before continuing, try to come up with representations for `Par`
+    * that make it possible to implement the functions of our API.
+    *
+    * @see [[ParUnit]]
+    * @see [[ParFork]]
+    */
 }
