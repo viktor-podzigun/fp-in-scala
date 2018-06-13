@@ -7,6 +7,7 @@ My solutions to the exercises from the excellent book [Functional Programming in
 4. [Handling errors without exceptions](src/main/scala/Chapter04.scala) => [tests](src/test/scala/Chapter04Spec.scala)
 5. [Strictness and laziness](src/main/scala/Chapter05.scala) => [tests](src/test/scala/Chapter05Spec.scala)
 6. [Purely functional state](src/main/scala/Chapter06.scala) => [tests](src/test/scala/Chapter06Spec.scala)
+7. [Purely functional parallelism](src/main/scala/Chapter07.scala) => [tests](src/test/scala/Chapter07Spec.scala)
 
 Almost all solutions are covered with corresponding tests.
 You can build and run tests and see the coverage by using the following command:
