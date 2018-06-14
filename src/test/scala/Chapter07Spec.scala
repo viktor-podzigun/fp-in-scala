@@ -27,7 +27,7 @@ class Chapter07Spec extends FlatSpec
     result.get shouldBe 3
   }
 
-  it should "should respect timeouts" in {
+  it should "respect timeouts" in {
     //when
     val result = Par.run(es)(Par.map2(
       compute(1, sleep = 100),
@@ -38,6 +38,19 @@ class Chapter07Spec extends FlatSpec
     the[TimeoutException] thrownBy {
       result.get(150, TimeUnit.MILLISECONDS)
     }
+  }
+
+  "asyncF" should "evaluate the given function's result asynchronously" in {
+    //given
+    def f(x: Int): String = (x * 2).toString
+
+    //when
+    val result = Par.run(es)(
+      Par.asyncF(f)(5)
+    )
+
+    //then
+    result.get shouldBe "10"
   }
 
   private def compute(value: Int, sleep: Int = 50): Par[Int] = { es: ExecutorService =>

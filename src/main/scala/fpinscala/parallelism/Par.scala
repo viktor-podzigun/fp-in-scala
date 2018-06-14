@@ -56,11 +56,22 @@ object Par {
   /**
     * Marks a computation for concurrent evaluation by `run`.
     */
-  def fork[A](a: => Par[A]): Par[A] = ???
+  def fork[A](a: => Par[A]): Par[A] = { es: ExecutorService =>
+    es.submit(new Callable[A] {
+      def call: A = a(es).get
+    })
+  }
 
   /**
     * Fully evaluates a given Par, spawning parallel computations
     * as requested by `fork` and extracting the resulting value.
     */
   def run[A](s: ExecutorService)(a: Par[A]): Future[A] = a(s)
+
+  /**
+    * Evaluates the given function's result asynchronously.
+    */
+  def asyncF[A, B](f: A => B): A => Par[B] = { a: A =>
+    lazyUnit(f(a))
+  }
 }

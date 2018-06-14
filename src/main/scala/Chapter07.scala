@@ -36,4 +36,14 @@ object Chapter07 {
     *
     * @see [[Par.Map2Future]]
     */
+
+  /**
+    * Exercise 7.4
+    *
+    * This API already enables a rich set of operations.
+    * Here's a simple example: using `lazyUnit`, write a function to convert
+    * any function `A => B` to one that evaluates its result asynchronously.
+    *
+    * @see [[Par.asyncF]]
+    */
 }
