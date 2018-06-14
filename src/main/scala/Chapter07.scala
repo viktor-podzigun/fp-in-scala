@@ -46,4 +46,13 @@ object Chapter07 {
     *
     * @see [[Par.asyncF]]
     */
+
+  /**
+    * Exercise 7.5
+    *
+    * Hard: Write this function, called `sequence`.
+    * No additional primitives are required. Do not call run.
+    *
+    * @see [[Par.sequence]]
+    */
 }

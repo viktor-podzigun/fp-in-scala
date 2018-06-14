@@ -53,6 +53,19 @@ class Chapter07Spec extends FlatSpec
     result.get shouldBe "10"
   }
 
+  "sequence" should "convert list of parallel computations to single Par holding list of results" in {
+    //given
+    val list = List(compute(1), compute(2), compute(3))
+
+    //when
+    val result = Par.run(es)(
+      Par.sequence(list)
+    )
+
+    //then
+    result.get shouldBe List(1, 2, 3)
+  }
+
   private def compute(value: Int, sleep: Int = 50): Par[Int] = { es: ExecutorService =>
     es.submit(new Callable[Int] {
       override def call(): Int = {
