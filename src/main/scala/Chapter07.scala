@@ -63,4 +63,13 @@ object Chapter07 {
     *
     * @see [[Par.parFilter]]
     */
+  
+  /**
+    * Exercise 7.11
+    *
+    * Implement `choiceN` and then `choice` in terms of `choiceN`.
+    *
+    * @see [[Par.choice]]
+    * @see [[Par.choiceN]]
+    */
 }

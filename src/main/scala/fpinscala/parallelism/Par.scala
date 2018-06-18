@@ -111,4 +111,15 @@ object Par {
       f(a, b, c, d, e)
     }
   }
+
+  def delay[A](fa: => Par[A]): Par[A] = es => fa(es)
+  
+  def choiceN[A](n: Par[Int])(choices: List[Par[A]]): Par[A] = { es: ExecutorService =>
+    val index = run(es)(n).get
+    choices(index)(es)
+  }
+
+  def choice[A](cond: Par[Boolean])(t: Par[A], f: Par[A]): Par[A] = {
+    choiceN(map(cond)(if (_) 0 else 1))(List(t, f))
+  }
 }

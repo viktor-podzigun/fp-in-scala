@@ -81,7 +81,9 @@ class Chapter07Spec extends FlatSpec
 
   "map3" should "combine the results of three parallel computations" in {
     //when
-    val result = Par.run(es)(Par.map3(compute(1), compute(2), compute(3))(_ + _ + _))
+    val result = Par.run(es)(
+      Par.map3(compute(1), compute(2), compute(3))(_ + _ + _)
+    )
 
     //then
     result.get shouldBe 6
@@ -89,7 +91,9 @@ class Chapter07Spec extends FlatSpec
 
   "map4" should "combine the results of four parallel computations" in {
     //when
-    val result = Par.run(es)(Par.map4(compute(1), compute(2), compute(3), compute(4))(_ + _ + _ + _))
+    val result = Par.run(es)(
+      Par.map4(compute(1), compute(2), compute(3), compute(4))(_ + _ + _ + _)
+    )
 
     //then
     result.get shouldBe 10
@@ -97,15 +101,43 @@ class Chapter07Spec extends FlatSpec
 
   "map5" should "combine the results of five parallel computations" in {
     //when
-    val result = Par.run(es)(Par.map5(compute(1), compute(2), compute(3), compute(4), compute(5))(_ + _ + _ + _ + _))
+    val result = Par.run(es)(
+      Par.map5(compute(1), compute(2), compute(3), compute(4), compute(5))(_ + _ + _ + _ + _)
+    )
 
     //then
     result.get shouldBe 15
   }
 
-  private def compute(value: Int, sleep: Int = 50): Par[Int] = { es: ExecutorService =>
-    es.submit(new Callable[Int] {
-      override def call(): Int = {
+  "choiceN" should "choose between N computations" in {
+    //given
+    val n = compute(2)
+    
+    //when
+    val result = Par.run(es)(
+      Par.choiceN(n)(List(compute(1), compute(2), compute(3)))
+    )
+
+    //then
+    result.get shouldBe 3
+  }
+
+  "choice" should "choose between two computations" in {
+    //given
+    val n = compute(false)
+    
+    //when
+    val result = Par.run(es)(
+      Par.choice(n)(compute(1), compute(2))
+    )
+
+    //then
+    result.get shouldBe 2
+  }
+
+  private def compute[A](value: A, sleep: Int = 50): Par[A] = { es: ExecutorService =>
+    es.submit(new Callable[A] {
+      override def call(): A = {
         Thread.sleep(sleep)
         value
       }
