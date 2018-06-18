@@ -93,4 +93,22 @@ object Par {
     val pm = parMap(as)(a => (a, f(a)))
     map(pm)(xs => xs.filter(_._2).map(_._1))
   }
+
+  def map3[A, B, C, D](pa: Par[A], pb: Par[B], pc: Par[C])(f: (A, B, C) => D): Par[D] = {
+    map2(map2(pa, pb)(_ -> _), pc) { case ((a, b), c) =>
+      f(a, b, c)
+    }
+  }
+  
+  def map4[A, B, C, D, E](pa: Par[A], pb: Par[B], pc: Par[C], pd: Par[D])(f: (A, B, C, D) => E): Par[E] = {
+    map2(map2(pa, pb)(_ -> _), map2(pc, pd)(_ -> _)) { case ((a, b), (c, d)) =>
+      f(a, b, c, d)
+    }
+  }
+  
+  def map5[A, B, C, D, E, F](pa: Par[A], pb: Par[B], pc: Par[C], pd: Par[D], pe: Par[E])(f: (A, B, C, D, E) => F): Par[F] = {
+    map2(map2(pa, pb)(_ -> _), map2(map2(pc, pd)(_ -> _), pe)(_ -> _)) { case ((a, b), ((c, d), e)) =>
+      f(a, b, c, d, e)
+    }
+  }
 }

@@ -79,6 +79,30 @@ class Chapter07Spec extends FlatSpec
     result.get shouldBe List(2, 3)
   }
 
+  "map3" should "combine the results of three parallel computations" in {
+    //when
+    val result = Par.run(es)(Par.map3(compute(1), compute(2), compute(3))(_ + _ + _))
+
+    //then
+    result.get shouldBe 6
+  }
+
+  "map4" should "combine the results of four parallel computations" in {
+    //when
+    val result = Par.run(es)(Par.map4(compute(1), compute(2), compute(3), compute(4))(_ + _ + _ + _))
+
+    //then
+    result.get shouldBe 10
+  }
+
+  "map5" should "combine the results of five parallel computations" in {
+    //when
+    val result = Par.run(es)(Par.map5(compute(1), compute(2), compute(3), compute(4), compute(5))(_ + _ + _ + _ + _))
+
+    //then
+    result.get shouldBe 15
+  }
+
   private def compute(value: Int, sleep: Int = 50): Par[Int] = { es: ExecutorService =>
     es.submit(new Callable[Int] {
       override def call(): Int = {
