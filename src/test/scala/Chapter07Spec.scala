@@ -66,6 +66,19 @@ class Chapter07Spec extends FlatSpec
     result.get shouldBe List(1, 2, 3)
   }
 
+  "parFilter" should "filter elements of a list in parallel" in {
+    //given
+    val list = List(1, 2, 3)
+
+    //when
+    val result = Par.run(es)(
+      Par.parFilter(list)(_ > 1)
+    )
+
+    //then
+    result.get shouldBe List(2, 3)
+  }
+
   private def compute(value: Int, sleep: Int = 50): Par[Int] = { es: ExecutorService =>
     es.submit(new Callable[Int] {
       override def call(): Int = {

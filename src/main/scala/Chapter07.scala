@@ -55,4 +55,12 @@ object Chapter07 {
     *
     * @see [[Par.sequence]]
     */
+  
+  /**
+    * Exercise 7.6
+    *
+    * Implement `parFilter`, which filters elements of a list in parallel.
+    *
+    * @see [[Par.parFilter]]
+    */
 }

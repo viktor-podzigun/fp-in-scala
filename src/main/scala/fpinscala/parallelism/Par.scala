@@ -83,4 +83,14 @@ object Par {
       map2(pa, pr)(_ :: _)
     })(_.reverse)
   }
+
+  def parMap[A, B](ps: List[A])(f: A => B): Par[List[B]] = fork {
+    val fbs: List[Par[B]] = ps.map(asyncF(f))
+    sequence(fbs)
+  }
+
+  def parFilter[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
+    val pm = parMap(as)(a => (a, f(a)))
+    map(pm)(xs => xs.filter(_._2).map(_._1))
+  }
 }
