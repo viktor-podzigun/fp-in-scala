@@ -127,4 +127,17 @@ object Par {
     val k = run(es)(key).get
     choices(k)(es)
   }
+  
+  def chooser[A, B](pa: Par[A])(choices: A => Par[B]): Par[B] = { es: ExecutorService =>
+    val a = run(es)(pa).get
+    choices(a)(es)
+  }
+
+  def choiceUsingChooser[A](cond: Par[Boolean])(t: Par[A], f: Par[A]): Par[A] = {
+    chooser(cond)(if (_) t else f)
+  }
+
+  def choiceNUsingChooser[A](pn: Par[Int])(choices: List[Par[A]]): Par[A] = {
+    chooser(pn)(choices)
+  }
 }

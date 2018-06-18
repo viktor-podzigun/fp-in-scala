@@ -148,6 +148,46 @@ class Chapter07Spec extends FlatSpec
     result.get shouldBe 3
   }
 
+  "chooser" should "return computation based on result of another computation" in {
+    //given
+    val a = compute(1)
+    val b = compute(2)
+
+    //when
+    val result = Par.run(es)(
+      Par.chooser(a)(_ => b)
+    )
+
+    //then
+    result.get shouldBe 2
+  }
+
+  "choiceUsingChooser" should "choose between two computations" in {
+    //given
+    val n = compute(false)
+
+    //when
+    val result = Par.run(es)(
+      Par.choiceUsingChooser(n)(compute(1), compute(2))
+    )
+
+    //then
+    result.get shouldBe 2
+  }
+
+  "choiceNUsingChooser" should "choose between N computations" in {
+    //given
+    val n = compute(2)
+
+    //when
+    val result = Par.run(es)(
+      Par.choiceNUsingChooser(n)(List(compute(1), compute(2), compute(3)))
+    )
+
+    //then
+    result.get shouldBe 3
+  }
+
   private def compute[A](value: A, sleep: Int = 50): Par[A] = { es: ExecutorService =>
     es.submit(new Callable[A] {
       override def call(): A = {

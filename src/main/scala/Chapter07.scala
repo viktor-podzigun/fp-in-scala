@@ -82,4 +82,14 @@ object Chapter07 {
     *
     * @see [[Par.choiceMap]]
     */
+  
+  /**
+    * Exercise 7.13
+    *
+    * Implement this new primitive `chooser`, and then use it to implement `choice` and `choiceN`.
+    *
+    * @see [[Par.chooser]]
+    * @see [[Par.choiceUsingChooser]]
+    * @see [[Par.choiceNUsingChooser]]
+    */
 }
