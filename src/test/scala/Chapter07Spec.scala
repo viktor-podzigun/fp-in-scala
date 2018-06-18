@@ -109,6 +109,19 @@ class Chapter07Spec extends FlatSpec
     result.get shouldBe 15
   }
 
+  "choice" should "choose between two computations" in {
+    //given
+    val n = compute(false)
+    
+    //when
+    val result = Par.run(es)(
+      Par.choice(n)(compute(1), compute(2))
+    )
+
+    //then
+    result.get shouldBe 2
+  }
+
   "choiceN" should "choose between N computations" in {
     //given
     val n = compute(2)
@@ -122,17 +135,17 @@ class Chapter07Spec extends FlatSpec
     result.get shouldBe 3
   }
 
-  "choice" should "choose between two computations" in {
+  "choiceMap" should "choose between map of computations" in {
     //given
-    val n = compute(false)
+    val n = compute("2")
     
     //when
     val result = Par.run(es)(
-      Par.choice(n)(compute(1), compute(2))
+      Par.choiceMap(n)(Map("0" -> compute(1), "1" -> compute(2), "2" -> compute(3)))
     )
 
     //then
-    result.get shouldBe 2
+    result.get shouldBe 3
   }
 
   private def compute[A](value: A, sleep: Int = 50): Par[A] = { es: ExecutorService =>

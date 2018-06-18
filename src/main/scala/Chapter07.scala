@@ -72,4 +72,14 @@ object Chapter07 {
     * @see [[Par.choice]]
     * @see [[Par.choiceN]]
     */
+  
+  /**
+    * Exercise 7.12
+    *
+    * There's still something rather arbitrary about `choiceN`.
+    * The `choice` of List seems overly specific. Why does it matter what sort of container we have?
+    * For instance, what if, instead of a list of computations, we have a Map of them:
+    *
+    * @see [[Par.choiceMap]]
+    */
 }
