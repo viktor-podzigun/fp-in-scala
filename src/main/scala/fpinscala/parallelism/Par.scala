@@ -140,4 +140,13 @@ object Par {
   def choiceNUsingChooser[A](pn: Par[Int])(choices: List[Par[A]]): Par[A] = {
     chooser(pn)(choices)
   }
+
+  def join[A](pa: Par[Par[A]]): Par[A] = { es: ExecutorService =>
+    val a = run(es)(pa).get
+    a(es)
+  }
+
+  def flatMap[A, B](pa: Par[A])(f: A => Par[B]): Par[B] = join(map(pa)(f))
+
+  def joinUsingFlatMap[A](pa: Par[Par[A]]): Par[A] = flatMap(pa)(identity)
 }

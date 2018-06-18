@@ -92,4 +92,15 @@ object Chapter07 {
     * @see [[Par.choiceUsingChooser]]
     * @see [[Par.choiceNUsingChooser]]
     */
+  
+  /**
+    * Exercise 7.14
+    *
+    * Implement `join`. Can you see how to implement `flatMap` using `join`?
+    * And can you implement `join` using `flatMap`?
+    *
+    * @see [[Par.join]]
+    * @see [[Par.flatMap]]
+    * @see [[Par.joinUsingFlatMap]]
+    */
 }

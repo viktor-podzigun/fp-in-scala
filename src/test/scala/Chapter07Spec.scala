@@ -188,6 +188,50 @@ class Chapter07Spec extends FlatSpec
     result.get shouldBe 3
   }
 
+  "join" should "return computation based on result of two nested computations" in {
+    //given
+    val pp = { es: ExecutorService =>
+      Par.lazyUnit(compute(2))(es)
+    }
+
+    //when
+    val result = Par.run(es)(
+      Par.join(pp)
+    )
+
+    //then
+    result.get shouldBe 2
+  }
+
+  "flatMap" should "return computation based on result of another computation" in {
+    //given
+    val a = compute(1)
+    val b = compute(2)
+
+    //when
+    val result = Par.run(es)(
+      Par.flatMap(a)(_ => b)
+    )
+
+    //then
+    result.get shouldBe 2
+  }
+
+  "joinUsingFlatMap" should "return computation based on result of two nested computations" in {
+    //given
+    val pp = { es: ExecutorService =>
+      Par.lazyUnit(compute(2))(es)
+    }
+
+    //when
+    val result = Par.run(es)(
+      Par.joinUsingFlatMap(pp)
+    )
+
+    //then
+    result.get shouldBe 2
+  }
+
   private def compute[A](value: A, sleep: Int = 50): Par[A] = { es: ExecutorService =>
     es.submit(new Callable[A] {
       override def call(): A = {
