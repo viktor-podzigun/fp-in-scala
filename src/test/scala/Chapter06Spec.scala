@@ -1,5 +1,5 @@
 import Chapter06._
-import fpinscala.purestate.RNG.Rand
+import fpinscala.purestate.RNG._
 import fpinscala.purestate._
 import org.scalamock.scalatest.MockFactory
 import org.scalatest._

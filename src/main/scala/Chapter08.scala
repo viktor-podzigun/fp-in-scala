@@ -53,4 +53,14 @@ object Chapter08 {
     * 
     * @see [[fpinscala.testing.Prop.&&]]
     */
+  
+  /**
+    * Exercise 8.4
+    *
+    * Implement `Gen.choose` using this representation of `Gen`.
+    * It should generate integers in the range `start` to `stopExclusive`.
+    * Feel free to use functions you've already written.
+    * 
+    * @see [[Gen.choose]]
+    */
 }

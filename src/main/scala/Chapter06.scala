@@ -11,14 +11,9 @@ object Chapter06 {
     * Write a function that uses `RNG.nextInt` to generate a random integer
     * between `0` and `Int.maxValue` (inclusive). Make sure to handle the corner case
     * when `nextInt` returns `Int.MinValue`, which doesn't have a non-negative counterpart.
+    * 
+    * @see [[RNG.nonNegativeInt]]
     */
-  def nonNegativeInt(rng: RNG): (Int, RNG) = {
-    val res@(i, next) = rng.nextInt
-
-    if (i == Int.MinValue) (0, next)
-    else if (i < 0) (-i, next)
-    else res
-  }
 
   /**
     * Exercise 6.2
@@ -131,20 +126,10 @@ object Chapter06 {
     * Exercise 6.8
     *
     * Implement `flatMap`, and then use it to implement `nonNegativeLessThan`.
+    * 
+    * @see [[RNG.flatMap]]
+    * @see [[RNG.nonNegativeLessThan]]
     */
-  def flatMap[A, B](f: Rand[A])(g: A => Rand[B]): Rand[B] = { rng =>
-    val (a, rng2) = f(rng)
-    g(a)(rng2)
-  }
-
-  def nonNegativeLessThan(n: Int): Rand[Int] = flatMap(nonNegativeInt) { i =>
-    val mod = i % n
-
-    if (i + (n - 1) - mod >= 0) { rng =>
-      (mod, rng)
-    }
-    else nonNegativeLessThan(n)
-  }
 
   /**
     * Exercise 6.9
