@@ -25,4 +25,22 @@ object Chapter08 {
     *   forAll(intList)(ns => ns.map(_ * 2).sum == (ns.sum * 2))
     * }}}
     */
+  
+  /**
+    * Exercise 8.2
+    *
+    * What properties specify a function that finds the maximum of a `List[Int]`?
+    * 
+    * {{{
+    *   forAll(intList)(ns => ns.reverse.max == ns.max)
+    *   
+    *   // if list has the same elements
+    *   forAll(intList)(ns => ns.max == ns.head)
+    *   
+    *   // if list is empty
+    *   forAll(intList)(ns => ns.max == Int.MIN_VALUE)
+    *   
+    *   forAll(intList)(ns => ns.max == ns.sorted.last)
+    * }}}
+    */
 }
