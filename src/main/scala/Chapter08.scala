@@ -1,4 +1,6 @@
 
+import fpinscala.testing._
+
 object Chapter08 {
 
   /**
@@ -42,5 +44,13 @@ object Chapter08 {
     *   
     *   forAll(intList)(ns => ns.max == ns.sorted.last)
     * }}}
+    */
+  
+  /**
+    * Exercise 8.3
+    *
+    * Assuming the following representation of `Prop`, implement `&&` as a method of `Prop`.
+    * 
+    * @see [[fpinscala.testing.Prop.&&]]
     */
 }
