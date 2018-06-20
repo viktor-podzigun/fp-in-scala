@@ -41,4 +41,9 @@ object Gen {
     val (a, rng2) = g.sample(rng)
     (List.fill(n)(a), rng2)
   })
+
+  def union[A](g1: Gen[A], g2: Gen[A]): Gen[A] = Gen.boolean.flatMap {
+    case true => g1
+    case false => g2
+  }
 }

@@ -96,4 +96,16 @@ class Chapter08Spec extends FlatSpec
     result2.forall(i => i == 0 || i == 1) shouldBe true
     next2 should not be next
   }
+
+  "union" should "return Gen combining two generators of the same type" in {
+    //given
+    val rng = SimpleRNG(42)
+    val gen = Gen.union(Gen.unit(true), Gen.unit(false))
+
+    //when & then
+    val (result, next) = gen.sample(rng)
+    List(result) should contain oneOf (true, false)
+
+    next should not be rng
+  }
 }

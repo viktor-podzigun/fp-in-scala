@@ -84,4 +84,13 @@ object Chapter08 {
     * @see [[Gen.flatMap]]
     * @see [[Gen.listOfN]]
     */
+  
+  /**
+    * Exercise 8.7
+    *
+    * Implement `union`, for combining two generators of the same type into one,
+    * by pulling values from each generator with equal likelihood.
+    * 
+    * @see [[Gen.union]]
+    */
 }
