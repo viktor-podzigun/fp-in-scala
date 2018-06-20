@@ -63,4 +63,15 @@ object Chapter08 {
     * 
     * @see [[Gen.choose]]
     */
+  
+  /**
+    * Exercise 8.5
+    *
+    * Let's see what else we can implement using this representation of `Gen`.
+    * Try implementing `unit`, `boolean`, and `listOfN`.
+    * 
+    * @see [[Gen.unit]]
+    * @see [[Gen.boolean]]
+    * @see [[Gen.listOfN]]
+    */
 }
