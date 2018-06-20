@@ -116,7 +116,20 @@ sealed trait Stream[+A] {
     case _ => None
   }
 
-  def zipWithUsingUnfold[AA >: A, B](s2: Stream[AA])(f: (AA, AA) => B): Stream[B] = {
+  def zip[B](s2: Stream[B]): Stream[(A, B)] = zipWithUsingUnfold(s2)((_, _))
+  
+  def find(p: A => Boolean): Option[A] = {
+    @tailrec
+    def loop(s: Stream[A], res: Option[A]): Option[A] = s match {
+      case Cons(h, _) if p(h()) => Some(h())
+      case Cons(_, t) => loop(t(), res)
+      case _ => res
+    }
+
+    loop(this, None)
+  }
+  
+  def zipWithUsingUnfold[B, C](s2: Stream[B])(f: (A, B) => C): Stream[C] = {
     Stream.unfold((this, s2)) {
       case (Cons(h1, t1), Cons(h2, t2)) => Some((f(h1(), h2()), (t1(), t2())))
       case _ => None

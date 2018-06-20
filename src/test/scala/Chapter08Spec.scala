@@ -1,6 +1,7 @@
 
 import Chapter08._
 import fpinscala.purestate.SimpleRNG
+import fpinscala.testing.Prop._
 import fpinscala.testing._
 import org.scalamock.scalatest.MockFactory
 import org.scalatest._
@@ -9,7 +10,7 @@ class Chapter08Spec extends FlatSpec
   with Matchers
   with MockFactory {
 
-  "choose" should "generate integers in the range start to stopExclusive" in {
+  "Gen.choose" should "generate integers in the range start to stopExclusive" in {
     //given
     val rng = SimpleRNG(42)
     
@@ -22,7 +23,7 @@ class Chapter08Spec extends FlatSpec
     next should not be rng
   }
   
-  "unit" should "always generate the given value" in {
+  "Gen.unit" should "always generate the given value" in {
     //given
     val rng = SimpleRNG(42)
     val gen = Gen.unit(10)
@@ -37,7 +38,7 @@ class Chapter08Spec extends FlatSpec
     next2 shouldBe rng
   }
   
-  "boolean" should "generate random boolean value" in {
+  "Gen.boolean" should "generate random boolean value" in {
     //given
     val rng = SimpleRNG(42)
     val gen = Gen.boolean
@@ -97,7 +98,7 @@ class Chapter08Spec extends FlatSpec
     next2 should not be next
   }
 
-  "union" should "return Gen combining two generators of the same type" in {
+  "Gen.union" should "return Gen combining two generators of the same type" in {
     //given
     val rng = SimpleRNG(42)
     val gen = Gen.union(Gen.unit(true), Gen.unit(false))
@@ -107,5 +108,39 @@ class Chapter08Spec extends FlatSpec
     List(result) should contain oneOf (true, false)
 
     next should not be rng
+  }
+  
+  "Prop.&&" should "return new Prop with current and the given Props combined with &&" in {
+    //given
+    val rng = SimpleRNG(42)
+    val gen = Gen.choose(1, 3)
+
+    //when & then
+    (Prop.forAll(gen)(_ >= 1) &&
+      Prop.forAll(gen)(_ < 3)
+      ).run(5, rng) shouldBe Prop.Passed
+
+    val Falsified(_, _, tag) = (
+      Prop.forAll(gen, "1")(_ >= 3) &&
+        Prop.forAll(gen, "2")(_ < 3)
+      ).run(5, rng)
+    tag shouldBe "1"
+  }
+  
+  "Prop.||" should "return new Prop with current and the given Props combined with ||" in {
+    //given
+    val rng = SimpleRNG(42)
+    val gen = Gen.choose(1, 3)
+
+    //when & then
+    (Prop.forAll(gen)(_ >= 3) ||
+      Prop.forAll(gen)(_ < 3)
+      ).run(5, rng) shouldBe Prop.Passed
+    
+    val Falsified(_, _, tag) = (
+      Prop.forAll(gen, "1")(_ < 1) ||
+        Prop.forAll(gen, "2")(_ >= 3)
+      ).run(5, rng)
+    tag shouldBe "2"
   }
 }

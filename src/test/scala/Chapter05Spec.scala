@@ -215,6 +215,29 @@ class Chapter05Spec extends FlatSpec
     Stream(1, 2, 3).takeWhileUsingUnfold(_ < 5).toList shouldBe List(1, 2, 3)
   }
 
+  "zip" should "return new Stream of paired elements of current and the given Streams" in {
+    //when & then
+    Stream[Int]().zip(Stream()).toList shouldBe List()
+    Stream(1).zip(Stream(1)).toList shouldBe List((1, 1))
+    Stream(1).zip(Stream(2, 3)).toList shouldBe List((1, 2))
+    Stream(1, 3).zip(Stream(2)).toList shouldBe List((1, 2))
+    Stream(1, 2, 3).zip(Stream()).toList shouldBe List()
+    Stream(1.0, 2.0, 3.0).zip(Stream("4", "5", "6")).toList shouldBe List(
+      (1.0, "4"),
+      (2.0, "5"),
+      (3.0, "6")
+    )
+  }
+
+  "find" should "return first element that match the given predicate" in {
+    //when & then
+    Stream[Int]().find(_ => true) shouldBe None
+    Stream[Int](1).find(_ => false) shouldBe None
+    Stream[Int](1).find(_ => true) shouldBe Some(1)
+    Stream[Int](1, 2).find(_ > 1) shouldBe Some(2)
+    Stream[Int](1, 2, 3).find(_ == 3) shouldBe Some(3)
+  }
+
   "zipWithUsingUnfold" should "return new Stream by merging paired elements of current and the given Streams" in {
     //when & then
     Stream[Int]().zipWithUsingUnfold(Stream())(_ + _).toList shouldBe List()

@@ -93,4 +93,17 @@ object Chapter08 {
     * 
     * @see [[Gen.union]]
     */
+  
+  /**
+    * Exercise 8.9
+    *
+    * Now that we have a representation of `Prop`, implement `&&` and `||`
+    * for composing `Prop` values. Notice that in the case of failure
+    * we don't know which property was responsible, the left or the right.
+    * Can you devise a way of handling this, perhaps by allowing `Prop` values
+    * to be assigned a tag or label which gets displayed in the event of a failure?
+    * 
+    * @see [[Prop.&&]]
+    * @see [[Prop.||]]
+    */
 }
