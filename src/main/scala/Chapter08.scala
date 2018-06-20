@@ -74,4 +74,14 @@ object Chapter08 {
     * @see [[Gen.boolean]]
     * @see [[Gen.listOfN]]
     */
+  
+  /**
+    * Exercise 8.6
+    *
+    * Implement `flatMap`, and then use it to implement this more dynamic version of `listOfN`.
+    * Put `flatMap` and `listOfN` in the Gen class.
+    * 
+    * @see [[Gen.flatMap]]
+    * @see [[Gen.listOfN]]
+    */
 }
