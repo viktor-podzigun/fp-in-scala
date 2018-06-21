@@ -114,16 +114,17 @@ class Chapter08Spec extends FlatSpec
     //given
     val rng = SimpleRNG(42)
     val gen = Gen.choose(1, 3)
+    val max = 5
 
     //when & then
     (Prop.forAll(gen)(_ >= 1) &&
       Prop.forAll(gen)(_ < 3)
-      ).run(5, rng) shouldBe Prop.Passed
+      ).run(max, 5, rng) shouldBe Prop.Passed
 
     val Falsified(_, _, tag) = (
       Prop.forAll(gen, "1")(_ >= 3) &&
         Prop.forAll(gen, "2")(_ < 3)
-      ).run(5, rng)
+      ).run(max, 5, rng)
     tag shouldBe "1"
   }
   
@@ -131,16 +132,17 @@ class Chapter08Spec extends FlatSpec
     //given
     val rng = SimpleRNG(42)
     val gen = Gen.choose(1, 3)
+    val max = 5
 
     //when & then
     (Prop.forAll(gen)(_ >= 3) ||
       Prop.forAll(gen)(_ < 3)
-      ).run(5, rng) shouldBe Prop.Passed
+      ).run(max, 5, rng) shouldBe Prop.Passed
     
     val Falsified(_, _, tag) = (
       Prop.forAll(gen, "1")(_ < 1) ||
         Prop.forAll(gen, "2")(_ >= 3)
-      ).run(5, rng)
+      ).run(max, 5, rng)
     tag shouldBe "2"
   }
   
@@ -186,5 +188,34 @@ class Chapter08Spec extends FlatSpec
     result2.size shouldBe 3
     result2.forall(i => i == 0 || i == 1) shouldBe true
     next2 should not be next
+  }
+  
+  "SGen.listOf1" should "generate nonempty lists" in {
+    //given
+    val rng = SimpleRNG(42)
+    val sgen = SGen.listOf1(Gen.choose(0, 2))
+
+    //when & then
+    val (result, next) = sgen.forSize(0).sample(rng)
+    result.size shouldBe 1
+    result.forall(i => i == 0 || i == 1) shouldBe true
+    next should not be rng
+
+    val (result2, next2) = sgen.forSize(3).sample(next)
+    result2.size shouldBe 3
+    result2.forall(i => i == 0 || i == 1) shouldBe true
+    next2 should not be next
+  }
+  
+  "maxProp" should "pass all the test cases" in {
+    //given
+    val smallInt = Gen.choose(-10, 10)
+    val maxProp = forAll(SGen.listOf1(smallInt)) { ns =>
+      val max = ns.max
+      !ns.exists(_ > max)
+    }
+    
+    //when & then
+    Prop.run(maxProp)
   }
 }

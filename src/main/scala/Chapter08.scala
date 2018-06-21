@@ -135,4 +135,13 @@ object Chapter08 {
     * 
     * @see [[SGen.listOf]]
     */
+  
+  /**
+    * Exercise 8.13
+    *
+    * Define `listOf1` for generating nonempty lists,
+    * and then update your specification of `max` to use this generator.
+    * 
+    * @see [[SGen.listOf1]]
+    */
 }
