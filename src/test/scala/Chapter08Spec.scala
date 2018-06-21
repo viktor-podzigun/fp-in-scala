@@ -154,4 +154,19 @@ class Chapter08Spec extends FlatSpec
     sgen.forSize(1) shouldBe gen
     sgen.forSize(5) shouldBe gen
   }
+
+  "SGen.unit" should "always generate the given value" in {
+    //given
+    val rng = SimpleRNG(42)
+    val sgen = SGen.unit(10)
+
+    //when & then
+    val (result, next) = sgen.forSize(5).sample(rng)
+    result shouldBe 10
+    next shouldBe rng
+
+    val (result2, next2) = sgen.forSize(3).sample(next)
+    result2 shouldBe 10
+    next2 shouldBe rng
+  }
 }

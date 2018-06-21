@@ -115,4 +115,14 @@ object Chapter08 {
     * 
     * @see [[Gen.unsized]]
     */
+  
+  /**
+    * Exercise 8.11
+    *
+    * Not surprisingly, `SGen` at a minimum supports many of the same operations as `Gen`,
+    * and the implementations are rather mechanical. Define some convenience functions
+    * on `SGen` that simply delegate to the corresponding functions on `Gen`.
+    * 
+    * @see [[SGen.unit]]
+    */
 }
