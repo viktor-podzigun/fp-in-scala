@@ -169,4 +169,22 @@ class Chapter08Spec extends FlatSpec
     result2 shouldBe 10
     next2 shouldBe rng
   }
+
+  "SGen.listOf" should "generate lists of the requested size" in {
+    //given
+    val rng = SimpleRNG(42)
+    val sgen = SGen.listOf(Gen.choose(0, 2))
+    val gen = sgen.forSize(3)
+
+    //when & then
+    val (result, next) = gen.sample(rng)
+    result.size shouldBe 3
+    result.forall(i => i == 0 || i == 1) shouldBe true
+    next should not be rng
+
+    val (result2, next2) = gen.sample(next)
+    result2.size shouldBe 3
+    result2.forall(i => i == 0 || i == 1) shouldBe true
+    next2 should not be next
+  }
 }

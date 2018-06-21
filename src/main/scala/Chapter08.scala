@@ -125,4 +125,14 @@ object Chapter08 {
     * 
     * @see [[SGen.unit]]
     */
+  
+  /**
+    * Exercise 8.12
+    *
+    * Implement a `listOf` combinator that doesn't accept an explicit `size`.
+    * It should return an `SGen` instead of a `Gen`.
+    * The implementation should generate lists of the requested size.
+    * 
+    * @see [[SGen.listOf]]
+    */
 }
