@@ -143,4 +143,15 @@ class Chapter08Spec extends FlatSpec
       ).run(5, rng)
     tag shouldBe "2"
   }
+  
+  "Gen.unsized" should "return new unsized generator that always return current gen" in {
+    //given
+    val gen = Gen.choose(1, 3)
+    val sgen = gen.unsized
+
+    //when & then
+    sgen.forSize(0) shouldBe gen
+    sgen.forSize(1) shouldBe gen
+    sgen.forSize(5) shouldBe gen
+  }
 }

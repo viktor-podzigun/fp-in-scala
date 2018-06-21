@@ -106,4 +106,13 @@ object Chapter08 {
     * @see [[Prop.&&]]
     * @see [[Prop.||]]
     */
+  
+  /**
+    * Exercise 8.10
+    *
+    * Implement helper functions for converting `Gen` to `SGen`.
+    * You can add this as a method on `Gen`.
+    * 
+    * @see [[Gen.unsized]]
+    */
 }

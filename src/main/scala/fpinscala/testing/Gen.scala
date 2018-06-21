@@ -1,8 +1,9 @@
 package fpinscala.testing
 
 import fpinscala.purestate._
+import fpinscala.testing.Gen.SGen
 
-case class Gen[A](sample: State[RNG, A]) {
+case class Gen[+A](sample: State[RNG, A]) {
 
   def flatMap[B](f: A => Gen[B]): Gen[B] = Gen(sample.flatMap { a =>
     f(a).sample
@@ -11,9 +12,13 @@ case class Gen[A](sample: State[RNG, A]) {
   def listOfN(size: Gen[Int]): Gen[List[A]] = size.flatMap { n =>
     Gen.listOfN(n, this)
   }
+
+  def unsized: SGen[A] = SGen(_ => this)
 }
 
 object Gen {
+
+  case class SGen[+A](forSize: Int => Gen[A])
 
   def choose(start: Int, stopExclusive: Int): Gen[Int] = Gen(State {
     RNG.map(RNG.nonNegativeLessThan(stopExclusive)) { i =>
