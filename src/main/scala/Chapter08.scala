@@ -164,4 +164,12 @@ object Chapter08 {
     * 
     * @see Chapter08Spec."richParMapProp"
     */
+  
+  /**
+    * Exercise 8.17
+    *
+    * Express the property about `fork` from chapter 7, that `fork(x) == x`.
+    * 
+    * @see Chapter08Spec."parForkProp"
+    */
 }

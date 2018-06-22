@@ -262,4 +262,13 @@ class Chapter08Spec extends FlatSpec
     //when & then
     Prop.run(richParMapProp)
   }
+  
+  "parForkProp" should "pass all the test cases" in {
+    //given
+    val pint = Gen.choose(0, 10).map(Par.unit)
+    val richParMapProp = forAllPar(pint)(n => Par.equal(Par.fork(n), n))
+
+    //when & then
+    Prop.run(richParMapProp)
+  }
 }
