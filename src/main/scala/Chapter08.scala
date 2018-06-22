@@ -172,4 +172,19 @@ object Chapter08 {
     * 
     * @see Chapter08Spec."parForkProp"
     */
+  
+  /**
+    * Exercise 8.18
+    *
+    * Come up with some other properties that `takeWhile` should satisfy.
+    * Can you think of a good property expressing the relationship between
+    * `takeWhile` and `dropWhile`?
+    *
+    * {{{
+    *   forAll(intList)(ns => ns.takeWhile(_ => false) == Nil)
+    *   forAll(intList)(ns => ns.takeWhile(_ => true) == ns)
+    *
+    *   forAll(intList)(ns => (ns.takeWhile(f) ++ ns.dropWhile(f)) == ns)
+    * }}}
+    */
 }
