@@ -218,4 +218,16 @@ class Chapter08Spec extends FlatSpec
     //when & then
     Prop.run(maxProp)
   }
+  
+  "sortedProp" should "pass all the test cases" in {
+    //given
+    val ints = Gen.choose(-100, 100)
+    val sortedProp =
+      forAll(SGen.unit(List.empty[Int]))(ns => ns.sorted == ns) &&
+      forAll(SGen.listOf(ints))(ns => ns.reverse.sorted == ns.sorted) &&
+      forAll(SGen.listOf1(ints))(ns => ns.sorted.last == ns.max && ns.sorted.head == ns.min)
+    
+    //when & then
+    Prop.run(sortedProp)
+  }
 }

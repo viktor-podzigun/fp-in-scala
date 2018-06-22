@@ -144,4 +144,14 @@ object Chapter08 {
     * 
     * @see [[SGen.listOf1]]
     */
+  
+  /**
+    * Exercise 8.14
+    *
+    * Write a property to verify the behavior of `List.sorted` (API docs link: http://mng.bz/Pz86),
+    * which you can use to sort (among other things) a `List[Int]`.
+    * For instance, `List(2,1,3).sorted` is equal to `List(1,2,3)`.
+    * 
+    * @see Chapter08Spec."sortedProp"
+    */
 }
