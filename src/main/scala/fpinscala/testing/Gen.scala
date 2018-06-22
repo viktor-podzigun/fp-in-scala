@@ -13,6 +13,16 @@ case class Gen[+A](sample: State[RNG, A]) {
   }
 
   def unsized: SGen[A] = SGen(_ => this)
+
+  def map[B](f: A => B): Gen[B] = Gen(sample.map(f))
+  
+  def map2[B, C](sb: Gen[B])(f: (A, B) => C): Gen[C] = Gen(sample.map2(sb.sample)(f))
+
+  def **[B](g: Gen[B]): Gen[(A, B)] = (this map2 g) ((_, _))
+}
+
+object ** {
+  def unapply[A, B](p: (A, B)) = Some(p)
 }
 
 object Gen {

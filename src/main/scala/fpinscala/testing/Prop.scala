@@ -1,6 +1,9 @@
 package fpinscala.testing
 
+import java.util.concurrent.{ExecutorService, Executors}
+
 import fpinscala.laziness.Stream
+import fpinscala.parallelism.Par.Par
 import fpinscala.purestate.{RNG, SimpleRNG}
 import fpinscala.testing.Prop._
 
@@ -33,6 +36,10 @@ object Prop {
 
   sealed trait Result {
     def isFalsified: Boolean
+  }
+
+  case object Proved extends Result {
+    val isFalsified = false
   }
 
   case object Passed extends Result {
@@ -78,6 +85,16 @@ object Prop {
     prop.run(max, n, rng)
   }
 
+  private val S: Gen[ExecutorService] = Gen.choose(1, 4).map(Executors.newFixedThreadPool)
+
+  def forAllPar[A](g: Gen[A])(f: A => Par[Boolean]): Prop = {
+    forAll(S ** g) { case s ** a => f(a)(s).get }
+  }
+  
+  def check(p: => Boolean): Prop = Prop { (_, _, _) =>
+    if (p) Proved else Falsified("()", 0, "")
+  }
+  
   def run(p: Prop,
           maxSize: Int = 100,
           testCases: Int = 100,
@@ -87,5 +104,7 @@ object Prop {
       println(s"! Falsified after $n passed tests:\n\t$msg")
     case Passed =>
       println(s"+ OK, passed $testCases tests.")
+    case Proved =>
+      println(s"+ OK, proved property.")
   }
 }

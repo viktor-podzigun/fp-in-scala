@@ -154,4 +154,14 @@ object Chapter08 {
     * 
     * @see Chapter08Spec."sortedProp"
     */
+  
+  /**
+    * Exercise 8.16
+    *
+    * Hard: Write a richer generator for `Par[Int]`,
+    * which builds more deeply nested parallel computations
+    * than the simple ones we gave previously.
+    * 
+    * @see Chapter08Spec."richParMapProp"
+    */
 }

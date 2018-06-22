@@ -1,5 +1,6 @@
 
 import Chapter08._
+import fpinscala.parallelism.Par
 import fpinscala.purestate.SimpleRNG
 import fpinscala.testing.Prop._
 import fpinscala.testing._
@@ -229,5 +230,36 @@ class Chapter08Spec extends FlatSpec
     
     //when & then
     Prop.run(sortedProp)
+  }
+
+  "checkProp" should "pass all the test cases" in {
+    //given
+    val checkProp = check(1 == 1)
+    
+    //when & then
+    Prop.run(checkProp)
+  }
+
+  "simpleParMapProp" should "pass all the test cases" in {
+    //given
+    val pint = Gen.choose(0, 10).map(Par.unit)
+    val simpleParMapProp = forAllPar(pint)(n => Par.equal(Par.map(n)(y => y), n))
+
+    //when & then
+    Prop.run(simpleParMapProp)
+  }
+  
+  "richParMapProp" should "pass all the test cases" in {
+    //given
+    val pint = Gen.choose(0, 10).map { i =>
+      Par.map2(
+        Par.fork(Par.unit(i)),
+        Par.fork(Par.unit(i))
+      )(_ + _)
+    }
+    val richParMapProp = forAllPar(pint)(n => Par.equal(Par.map(n)(y => y), n))
+
+    //when & then
+    Prop.run(richParMapProp)
   }
 }
